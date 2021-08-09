@@ -1,0 +1,1379 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="基于opencv的pca人脸识别实现, smile">
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>基于opencv的pca人脸识别实现 | smile</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+
+    <script src="/libs/jquery/jquery.min.js"></script>
+
+<meta name="generator" content="Hexo 5.4.0"><link rel="stylesheet" href="/css/prism.css" type="text/css"></head>
+
+
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">smile</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/contact" class="waves-effect waves-light">
+      
+      <i class="fas fa-comments" style="zoom: 0.6;"></i>
+      
+      <span>留言板</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
+      
+      <span>友情链接</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="" class="waves-effect waves-light">
+
+      
+      <i class="fas fa-list" style="zoom: 0.6;"></i>
+      
+      <span>Medias</span>
+      <i class="fas fa-chevron-down" aria-hidden="true" style="zoom: 0.6;"></i>
+    </a>
+    <ul class="sub-nav menus_item_child ">
+      
+      <li>
+        <a href="/musics">
+          
+          <i class="fas fa-music" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>Musics</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/movies">
+          
+          <i class="fas fa-film" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>Movies</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/books">
+          
+          <i class="fas fa-book" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>Books</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/galleries">
+          
+          <i class="fas fa-image" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>Galleries</span>
+        </a>
+      </li>
+      
+    </ul>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">smile</div>
+        <div class="logo-desc">
+            
+            Never really desperate, only the lost of the soul.
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/contact" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-comments"></i>
+			
+			留言板
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-address-book"></i>
+			
+			友情链接
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="javascript:;">
+			
+				<i class="fa-fw fas fa-list"></i>
+			
+			Medias
+			<span class="m-icon"><i class="fas fa-chevron-right"></i></span>
+		</a>
+            <ul  style="background:  ;" >
+              
+                <li>
+
+                  <a href="/musics " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-music" style="position: absolute;left:50px" ></i>
+			      
+		          <span>Musics</span>
+                  </a>
+                </li>
+              
+                <li>
+
+                  <a href="/movies " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-film" style="position: absolute;left:50px" ></i>
+			      
+		          <span>Movies</span>
+                  </a>
+                </li>
+              
+                <li>
+
+                  <a href="/books " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-book" style="position: absolute;left:50px" ></i>
+			      
+		          <span>Books</span>
+                  </a>
+                </li>
+              
+                <li>
+
+                  <a href="/galleries " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-image" style="position: absolute;left:50px" ></i>
+			      
+		          <span>Galleries</span>
+                  </a>
+                </li>
+              
+            </ul>
+          
+        </li>
+        
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/0.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">基于opencv的pca人脸识别实现</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        padding: 35px 0 15px 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        padding-bottom: 30px;
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/AI/">
+                                <span class="chip bg-color">AI</span>
+                            </a>
+                        
+                            <a href="/tags/python/">
+                                <span class="chip bg-color">python</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/python/" class="post-category">
+                                python
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2021-08-05
+                </div>
+                
+
+                
+
+                
+
+                
+
+                
+            </div>
+        </div>
+        <hr class="clearfix">
+
+        
+
+        
+
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h3 id="orl人脸样本库"><a href="#orl人脸样本库" class="headerlink" title="orl人脸样本库"></a>orl人脸样本库</h3><p>这里用到的ORL人脸库（Olivetti Research Laboratory人脸数据库），诞生于英国剑桥Olivetti实验室。</p>
+<p>ORL人脸数据库由该实验室从1992年4月到1994年4月期间拍摄的一系列人脸图像组成，共有40个不同年龄、不同性别和不同种族的对象。每个人10幅图像共计400幅灰度图像组成，图像尺寸是92×112，图像背景为黑色。其中人脸部分表情和细节均有变化，例如笑与不笑、眼睛睁着或闭着，戴或不戴眼镜等，人脸姿态也有变化，其深度旋转和平面旋转可达20度，人脸尺寸也有最多10%的变化。该库是目前使用最广泛的标准人脸数据库，特别是刚从事人脸识别研究的学生和初学者，研究ORL人脸库是个很好的开始。<br>人脸库下载：<a target="_blank" rel="noopener" href="https://github.com/Gaoshiguo/PCA-Principal-Components-Analysis">https://github.com/Gaoshiguo/PCA-Principal-Components-Analysis</a><br>下载压缩包orl.rar,获得bmp格式的人脸灰度图  </p>
+<h3 id="自制人脸样本库"><a href="#自制人脸样本库" class="headerlink" title="自制人脸样本库"></a>自制人脸样本库</h3><p>代码实现：</p>
+<pre class=" language-python"><code class="language-python"><span class="token comment" spellcheck="true"># 导入所需模块</span>
+<span class="token keyword">import</span> matplotlib<span class="token punctuation">.</span>pyplot <span class="token keyword">as</span> plt
+<span class="token keyword">import</span> numpy <span class="token keyword">as</span> np
+<span class="token keyword">import</span> os
+<span class="token keyword">import</span> cv2
+<span class="token comment" spellcheck="true"># plt显示彩色图片</span>
+<span class="token keyword">def</span> <span class="token function">plt_show0</span><span class="token punctuation">(</span>img<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    b<span class="token punctuation">,</span>g<span class="token punctuation">,</span>r <span class="token operator">=</span> cv2<span class="token punctuation">.</span>split<span class="token punctuation">(</span>img<span class="token punctuation">)</span>
+    img <span class="token operator">=</span> cv2<span class="token punctuation">.</span>merge<span class="token punctuation">(</span><span class="token punctuation">[</span>r<span class="token punctuation">,</span> g<span class="token punctuation">,</span> b<span class="token punctuation">]</span><span class="token punctuation">)</span>
+    plt<span class="token punctuation">.</span>axis<span class="token punctuation">(</span><span class="token string">'off'</span><span class="token punctuation">)</span>
+    plt<span class="token punctuation">.</span>imshow<span class="token punctuation">(</span>img<span class="token punctuation">)</span>
+    plt<span class="token punctuation">.</span>show<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+<span class="token comment" spellcheck="true"># 加载人脸检测模型</span>
+face_engine <span class="token operator">=</span> cv2<span class="token punctuation">.</span>CascadeClassifier<span class="token punctuation">(</span>cv2<span class="token punctuation">.</span>data<span class="token punctuation">.</span>haarcascades<span class="token operator">+</span><span class="token string">'haarcascade_frontalface_default.xml'</span><span class="token punctuation">)</span>
+img <span class="token operator">=</span> cv2<span class="token punctuation">.</span>imread<span class="token punctuation">(</span>r<span class="token string">'.\test.png'</span><span class="token punctuation">)</span>
+plt_show0<span class="token punctuation">(</span>img<span class="token punctuation">)</span>
+
+<span class="token comment" spellcheck="true"># 复制图像灰度处理</span>
+img_ <span class="token operator">=</span> img<span class="token punctuation">.</span>copy<span class="token punctuation">(</span><span class="token punctuation">)</span>
+gray <span class="token operator">=</span> cv2<span class="token punctuation">.</span>cvtColor<span class="token punctuation">(</span>img<span class="token punctuation">,</span> cv2<span class="token punctuation">.</span>COLOR_RGB2GRAY<span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true"># 检测人脸获取人脸区域</span>
+faces <span class="token operator">=</span> face_engine<span class="token punctuation">.</span>detectMultiScale<span class="token punctuation">(</span>gray<span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true"># 将检测出的人脸可视化</span>
+<span class="token keyword">for</span><span class="token punctuation">(</span>x<span class="token punctuation">,</span> y<span class="token punctuation">,</span> w<span class="token punctuation">,</span> h<span class="token punctuation">)</span> <span class="token keyword">in</span> faces<span class="token punctuation">:</span>
+    cv2<span class="token punctuation">.</span>rectangle<span class="token punctuation">(</span>img_<span class="token punctuation">,</span> <span class="token punctuation">(</span>x<span class="token punctuation">,</span> y<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token punctuation">(</span>x <span class="token operator">+</span> w<span class="token punctuation">,</span> y <span class="token operator">+</span> h<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">255</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">)</span>
+    plt_show0<span class="token punctuation">(</span>img_<span class="token punctuation">)</span>
+    face <span class="token operator">=</span> img<span class="token punctuation">[</span>y<span class="token punctuation">:</span>y <span class="token operator">+</span> w<span class="token punctuation">,</span> x<span class="token punctuation">:</span>x <span class="token operator">+</span> h<span class="token punctuation">]</span>
+    plt_show0<span class="token punctuation">(</span>face<span class="token punctuation">)</span>
+</code></pre>
+<h4 id="output"><a href="#output" class="headerlink" title="output:"></a>output:</h4><blockquote>
+<p><img src="https://img-blog.csdnimg.cn/fa780c7b755a4b758edaf487d4bbe0e6.png">  </p>
+</blockquote>
+<p>这里使用的是opencv自带的人脸识别模型，生成的图片分辨率是640<em>480，不能直接使用pca降维，需要对图片进行裁剪缩放，灰度处理。使用photoshop或者python均可，图像大小调整为92</em>112即可</p>
+<h2 id="PCA算法"><a href="#PCA算法" class="headerlink" title="PCA算法"></a>PCA算法</h2><h3 id="算法原理"><a href="#算法原理" class="headerlink" title="算法原理"></a>算法原理</h3><p>算法是利用K-L变换来进行特征提取的。K-L变换是满足上述原则的一 种数据压缩方法 , 它的特征提取的基本原理是 在测量空间中找出一组 个正交矢量, 要求这组矢量能最大的表示出数据的方差然后将原模式矢量从维空间投影到这组正交矢量构成的维子空间, 则投影系数就是构成原模式的特征矢量, 且完成了维数的压缩。<br>设训练样本为x=(x1,x2,…,x200)T, 特征提取的具体步骤如下：<br>1、计算训练图片的平均脸：ψ=average（xi）<br>2、计算每一张人脸图片与平均脸的差值di=xi-ψ<br>3、构建协方差矩阵C=1/200*ATA<br>4、求矩阵V=ATA的特征值λ及其对应的正交归一化特征矢量vi<br>5、选取前p（p&lt;&lt;200）最大特征值及其对应的特征向量<br>6、求C的正交归一化特征向量<br>7、将每一幅人脸与平均脸的差值矢量投影到“特征脸”空间</p>
+<h4 id="1、利用训练图像数据构建特征脸空间"><a href="#1、利用训练图像数据构建特征脸空间" class="headerlink" title="1、利用训练图像数据构建特征脸空间"></a>1、利用训练图像数据构建特征脸空间</h4><pre class=" language-python"><code class="language-python"><span class="token comment" spellcheck="true">#导入所需模块</span>
+<span class="token keyword">import</span> matplotlib<span class="token punctuation">.</span>pyplot <span class="token keyword">as</span> plt
+<span class="token keyword">import</span> numpy <span class="token keyword">as</span> np
+<span class="token keyword">import</span> os
+<span class="token keyword">import</span> cv2
+<span class="token comment" spellcheck="true">#plt显示灰度图片</span>
+defplt_show<span class="token punctuation">(</span>img<span class="token punctuation">)</span><span class="token punctuation">:</span>
+plt<span class="token punctuation">.</span>imshow<span class="token punctuation">(</span>img<span class="token punctuation">,</span>cmap<span class="token operator">=</span><span class="token string">'gray'</span><span class="token punctuation">)</span>
+plt<span class="token punctuation">.</span>show<span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true">#读取一个文件夹下的所有图片</span>
+defread_directory<span class="token punctuation">(</span>directory_name<span class="token punctuation">)</span><span class="token punctuation">:</span>
+faces_addr<span class="token operator">=</span><span class="token punctuation">[</span><span class="token punctuation">]</span>
+forfilenameinos<span class="token punctuation">.</span>listdir<span class="token punctuation">(</span>directory_name<span class="token punctuation">)</span><span class="token punctuation">:</span>
+faces_addr<span class="token punctuation">.</span>append<span class="token punctuation">(</span>directory_name<span class="token operator">+</span><span class="token string">"/"</span><span class="token operator">+</span>filename<span class="token punctuation">)</span>
+returnfaces_addr
+<span class="token comment" spellcheck="true">#读取所有人脸文件夹,保存图像地址在列表中</span>
+faces<span class="token operator">=</span><span class="token punctuation">[</span><span class="token punctuation">]</span>
+foriinrange<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">41</span><span class="token punctuation">)</span><span class="token punctuation">:</span><span class="token comment" spellcheck="true">#如果没有自制人脸库，需要将此处改为1:40</span>
+faces_addr<span class="token operator">=</span>read_directory<span class="token punctuation">(</span><span class="token string">'.\TrainDatabase\s'</span><span class="token operator">+</span>str<span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">)</span>
+foraddrinfaces_addr<span class="token punctuation">:</span>
+faces<span class="token punctuation">.</span>append<span class="token punctuation">(</span>addr<span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true">#读取图片数据,生成列表标签</span>
+images<span class="token operator">=</span><span class="token punctuation">[</span><span class="token punctuation">]</span>
+labels<span class="token operator">=</span><span class="token punctuation">[</span><span class="token punctuation">]</span>
+forindex<span class="token punctuation">,</span>faceinenumerate<span class="token punctuation">(</span>faces<span class="token punctuation">)</span><span class="token punctuation">:</span>
+image<span class="token operator">=</span>cv2<span class="token punctuation">.</span>imread<span class="token punctuation">(</span>face<span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">)</span>
+images<span class="token punctuation">.</span>append<span class="token punctuation">(</span>image<span class="token punctuation">)</span>
+labels<span class="token punctuation">.</span>append<span class="token punctuation">(</span>int<span class="token punctuation">(</span>index<span class="token operator">/</span><span class="token number">10</span><span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>len<span class="token punctuation">(</span>labels<span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>len<span class="token punctuation">(</span>images<span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>type<span class="token punctuation">(</span>images<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>labels<span class="token punctuation">)</span>
+</code></pre>
+<h4 id="output-1"><a href="#output-1" class="headerlink" title="output:"></a>output:</h4><blockquote>
+<p>410<br>410<br>&lt;class ‘numpy.ndarray’&gt;<br>[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 26, 26, 26, 26, 26, 26, 26, 26, 26, 26, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 29, 29, 29, 29, 29, 29, 29, 29, 29, 29, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 31, 31, 31, 31, 31, 31, 31, 31, 31, 31, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 36, 36, 36, 36, 36, 36, 36, 36, 36, 36, 37, 37, 37, 37, 37, 37, 37, 37, 37, 37, 38, 38, 38, 38, 38, 38, 38, 38, 38, 38, 39, 39, 39, 39, 39, 39, 39, 39, 39, 39, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 41, 41, 41, 41, 41, 41, 41, 41, 41, 41]  </p>
+</blockquote>
+<h4 id="2、训练阶段-主要是将训练图像投影到特征脸子空间上"><a href="#2、训练阶段-主要是将训练图像投影到特征脸子空间上" class="headerlink" title="2、训练阶段,主要是将训练图像投影到特征脸子空间上"></a>2、训练阶段,主要是将训练图像投影到特征脸子空间上</h4><pre class=" language-python"><code class="language-python"><span class="token comment" spellcheck="true">#图像数据转换特征矩阵</span>
+image_data<span class="token operator">=</span><span class="token punctuation">[</span><span class="token punctuation">]</span>
+forimageinimages<span class="token punctuation">:</span>
+data<span class="token operator">=</span>image<span class="token punctuation">.</span>flatten<span class="token punctuation">(</span><span class="token punctuation">)</span>
+image_data<span class="token punctuation">.</span>append<span class="token punctuation">(</span>data<span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>image_data<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>shape<span class="token punctuation">)</span>
+</code></pre>
+<h4 id="OUT"><a href="#OUT" class="headerlink" title="OUT:"></a>OUT:</h4><blockquote>
+<p>(10304,)</p>
+</blockquote>
+<pre class=" language-python"><code class="language-python"><span class="token comment" spellcheck="true">#转换为numpy数组</span>
+X<span class="token operator">=</span>np<span class="token punctuation">.</span>array<span class="token punctuation">(</span>image_data<span class="token punctuation">)</span>
+y<span class="token operator">=</span>np<span class="token punctuation">.</span>array<span class="token punctuation">(</span>labels<span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>type<span class="token punctuation">(</span>X<span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>X<span class="token punctuation">.</span>shape<span class="token punctuation">)</span>
+
+<span class="token comment" spellcheck="true">#导入sklearn的pca模块</span>
+fromsklearn<span class="token punctuation">.</span>decompositionimportPCA
+fromsklearn<span class="token punctuation">.</span>model_selectionimporttrain_test_split
+<span class="token comment" spellcheck="true">#画出特征矩阵</span>
+importpandasaspd
+data<span class="token operator">=</span>pd<span class="token punctuation">.</span>DataFrame<span class="token punctuation">(</span>X<span class="token punctuation">)</span>
+data<span class="token punctuation">.</span>head<span class="token punctuation">(</span><span class="token punctuation">)</span>
+dtype<span class="token operator">=</span>object
+<span class="token comment" spellcheck="true">#划分数据集</span>
+x_train<span class="token punctuation">,</span>x_test<span class="token punctuation">,</span>y_train<span class="token punctuation">,</span>y_test<span class="token operator">=</span>train_test_split<span class="token punctuation">(</span>X<span class="token punctuation">,</span>y<span class="token punctuation">,</span>test_size<span class="token operator">=</span><span class="token number">0.2</span><span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true">#训练PCA模型</span>
+pca<span class="token operator">=</span>PCA<span class="token punctuation">(</span>n_components<span class="token operator">=</span><span class="token number">100</span><span class="token punctuation">)</span>
+pca<span class="token punctuation">.</span>fit<span class="token punctuation">(</span>x_train<span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true">#返回测试集和训练集降维后的数据集</span>
+x_train_pca<span class="token operator">=</span>pca<span class="token punctuation">.</span>transform<span class="token punctuation">(</span>x_train<span class="token punctuation">)</span>
+x_test_pca<span class="token operator">=</span>pca<span class="token punctuation">.</span>transform<span class="token punctuation">(</span>x_test<span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>x_train_pca<span class="token punctuation">.</span>shape<span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>x_test_pca<span class="token punctuation">.</span>shape<span class="token punctuation">)</span>
+</code></pre>
+<h4 id="OUT-1"><a href="#OUT-1" class="headerlink" title="OUT:"></a>OUT:</h4><blockquote>
+<p>(328, 100)<br>(82, 100)</p>
+</blockquote>
+<pre class=" language-python"><code class="language-python">V<span class="token operator">=</span>pca<span class="token punctuation">.</span>components_
+V<span class="token punctuation">.</span>shape
+<span class="token comment" spellcheck="true">#100个特征脸</span>
+<span class="token comment" spellcheck="true">#创建画布和子图对象</span>
+fig<span class="token punctuation">,</span>axes<span class="token operator">=</span>plt<span class="token punctuation">.</span>subplots<span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">,</span><span class="token number">10</span>
+<span class="token punctuation">,</span>figsize<span class="token operator">=</span><span class="token punctuation">(</span><span class="token number">15</span><span class="token punctuation">,</span><span class="token number">15</span><span class="token punctuation">)</span>
+<span class="token punctuation">,</span>subplot_kw<span class="token operator">=</span><span class="token operator">&amp;</span><span class="token comment" spellcheck="true">#123;"xticks":[],"yticks":[]&amp;#125;#不要显示坐标轴</span>
+<span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true">#填充图像</span>
+fori<span class="token punctuation">,</span>axinenumerate<span class="token punctuation">(</span>axes<span class="token punctuation">.</span>flat<span class="token punctuation">)</span><span class="token punctuation">:</span>
+ax<span class="token punctuation">.</span>imshow<span class="token punctuation">(</span>V<span class="token punctuation">[</span>i<span class="token punctuation">,</span><span class="token punctuation">:</span><span class="token punctuation">]</span><span class="token punctuation">.</span>reshape<span class="token punctuation">(</span><span class="token number">112</span><span class="token punctuation">,</span><span class="token number">92</span><span class="token punctuation">)</span><span class="token punctuation">,</span>cmap<span class="token operator">=</span><span class="token string">"gray"</span><span class="token punctuation">)</span><span class="token comment" spellcheck="true">#选择色彩的模式</span>
+pca<span class="token punctuation">.</span>explained_variance_ratio_
+<span class="token keyword">print</span><span class="token punctuation">(</span>pca<span class="token punctuation">.</span>explained_variance_ratio_<span class="token punctuation">)</span>
+pca<span class="token punctuation">.</span>explained_variance_ratio_<span class="token punctuation">.</span>sum<span class="token punctuation">(</span><span class="token punctuation">)</span>
+</code></pre>
+<h4 id="output-2"><a href="#output-2" class="headerlink" title="output:"></a>output:</h4><blockquote>
+<p><img src="https://img-blog.csdnimg.cn/9d4bec5fda4e4228b60efa2e3de3f428.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2ZyZWV6aW5nX3NtaWxl,size_16,color_FFFFFF,t_70">    </p>
+</blockquote>
+<pre class=" language-python"><code class="language-python">explained_variance_ratio<span class="token operator">=</span><span class="token punctuation">[</span><span class="token punctuation">]</span>
+foriinrange<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">151</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+pca<span class="token operator">=</span>PCA<span class="token punctuation">(</span>n_components<span class="token operator">=</span>i<span class="token punctuation">)</span><span class="token punctuation">.</span>fit<span class="token punctuation">(</span>x_train<span class="token punctuation">)</span>
+explained_variance_ratio<span class="token punctuation">.</span>append<span class="token punctuation">(</span>pca<span class="token punctuation">.</span>explained_variance_ratio_<span class="token punctuation">.</span>sum<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+plt<span class="token punctuation">.</span>plot<span class="token punctuation">(</span>range<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">151</span><span class="token punctuation">)</span><span class="token punctuation">,</span>explained_variance_ratio<span class="token punctuation">)</span>
+plt<span class="token punctuation">.</span>show<span class="token punctuation">(</span><span class="token punctuation">)</span>
+</code></pre>
+<h4 id="output-3"><a href="#output-3" class="headerlink" title="output:"></a>output:</h4><blockquote>
+<p>array([0.16754406, 0.11712118, 0.08050592, 0.05800583, 0.04899411, 0.03236304, 0.02552568, 0.02246334, 0.02105942, 0.01869678, 0.01492577, 0.01452819, 0.01195689, 0.01106418, 0.01061136, 0.00920361, 0.00893044, 0.00841665, 0.00815548, 0.00745415, 0.00684847, 0.00674609, 0.00641437, 0.00555017, 0.00533678, 0.00511044, 0.00498169, 0.00493545, 0.00477643, 0.0046901 , 0.00452947, 0.00443995, 0.00424948, 0.00415627, 0.00402244, 0.00391703, 0.00380438, 0.00365518, 0.00347555, 0.00338822, 0.00325 , 0.00306806, 0.00305956, 0.00297671, 0.00286721, 0.00281228, 0.00272433, 0.00266031, 0.00257338, 0.00251557, 0.00247235, 0.00243605, 0.00236254, 0.00232992, 0.00225821, 0.00221418, 0.00217406, 0.00213639, 0.00203163, 0.00199645, 0.00194659, 0.00193678, 0.00187899, 0.00186114, 0.00181597, 0.00178071, 0.0017298 , 0.00171467, 0.00166234, 0.00163148, 0.00160447, 0.00157375, 0.00155019, 0.00154325, 0.00152017, 0.00149426, 0.00147426, 0.00145617, 0.00143343, 0.00140277, 0.00138425, 0.00135825, 0.00134036, 0.00133259, 0.00129024, 0.00126753, 0.00124071, 0.00123078, 0.00121395, 0.00119294, 0.00116697, 0.00115547, 0.00111406, 0.00111104, 0.00109964, 0.00107608, 0.00106702, 0.00105275, 0.00102797, 0.00100745])<br>0.9002145083699277  </p>
+</blockquote>
+<p>array里的这些值代表这些特征量对原图的贡献，最后这里300个特征量的贡献占到总10000多维度的90%</p>
+<h4 id="3、识别阶段-将待识别图像也投影到特征脸子空间上-并且与投影后的训练图像相比较，得出识别结果。"><a href="#3、识别阶段-将待识别图像也投影到特征脸子空间上-并且与投影后的训练图像相比较，得出识别结果。" class="headerlink" title="3、识别阶段,将待识别图像也投影到特征脸子空间上,并且与投影后的训练图像相比较，得出识别结果。"></a>3、识别阶段,将待识别图像也投影到特征脸子空间上,并且与投影后的训练图像相比较，得出识别结果。</h4><pre class=" language-python"><code class="language-python"><span class="token comment" spellcheck="true">#模型创建与训练</span>
+model<span class="token operator">=</span>cv2<span class="token punctuation">.</span>face<span class="token punctuation">.</span>EigenFaceRecognizer_create<span class="token punctuation">(</span><span class="token punctuation">)</span>
+model<span class="token punctuation">.</span>train<span class="token punctuation">(</span>x_train<span class="token punctuation">,</span>y_train<span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true">#预测</span>
+res<span class="token operator">=</span>model<span class="token punctuation">.</span>predict<span class="token punctuation">(</span>x_test<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>res<span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true">#测试数据集的准确率</span>
+ress<span class="token operator">=</span><span class="token punctuation">[</span><span class="token punctuation">]</span>
+true<span class="token operator">=</span><span class="token number">0</span>
+foriinrange<span class="token punctuation">(</span>len<span class="token punctuation">(</span>y_test<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+res<span class="token operator">=</span>model<span class="token punctuation">.</span>predict<span class="token punctuation">(</span>x_test<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true">#print(res[0])</span>
+ify_test<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token operator">==</span>res<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">:</span>
+true<span class="token operator">=</span>true<span class="token operator">+</span><span class="token number">1</span>
+<span class="token keyword">else</span><span class="token punctuation">:</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span>
+
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'测试集识别准确率：%.2f'</span><span class="token operator">%</span><span class="token punctuation">(</span>true<span class="token operator">/</span>len<span class="token punctuation">(</span>y_test<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+</code></pre>
+<h4 id="output-4"><a href="#output-4" class="headerlink" title="output:"></a>output:</h4><blockquote>
+<p>(17, 3574.1839755765554)<br>0<br>测试集识别准确率：0.99</p>
+</blockquote>
+<pre class=" language-python"><code class="language-python"><span class="token comment" spellcheck="true">#降维</span>
+pca<span class="token operator">=</span>PCA<span class="token punctuation">(</span>n_components<span class="token operator">=</span><span class="token number">100</span><span class="token punctuation">)</span>
+pca<span class="token punctuation">.</span>fit<span class="token punctuation">(</span>X<span class="token punctuation">)</span>
+X<span class="token operator">=</span>pca<span class="token punctuation">.</span>transform<span class="token punctuation">(</span>X<span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true">#将所有数据都用作训练集</span>
+<span class="token comment" spellcheck="true">#模型创建与训练</span>
+model<span class="token operator">=</span>cv2<span class="token punctuation">.</span>face<span class="token punctuation">.</span>EigenFaceRecognizer_create<span class="token punctuation">(</span><span class="token punctuation">)</span>
+model<span class="token punctuation">.</span>train<span class="token punctuation">(</span>X<span class="token punctuation">,</span>y<span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true">#plt显示彩色图片</span>
+defplt_show0<span class="token punctuation">(</span>img<span class="token punctuation">)</span><span class="token punctuation">:</span>
+b<span class="token punctuation">,</span>g<span class="token punctuation">,</span>r<span class="token operator">=</span>cv2<span class="token punctuation">.</span>split<span class="token punctuation">(</span>img<span class="token punctuation">)</span>
+img<span class="token operator">=</span>cv2<span class="token punctuation">.</span>merge<span class="token punctuation">(</span><span class="token punctuation">[</span>r<span class="token punctuation">,</span>g<span class="token punctuation">,</span>b<span class="token punctuation">]</span><span class="token punctuation">)</span>
+plt<span class="token punctuation">.</span>imshow<span class="token punctuation">(</span>img<span class="token punctuation">)</span>
+plt<span class="token punctuation">.</span>show<span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true">#输入图片识别</span>
+img<span class="token operator">=</span>cv2<span class="token punctuation">.</span>imread<span class="token punctuation">(</span><span class="token string">'./att_faces/test.jpg'</span><span class="token punctuation">)</span>
+plt_show0<span class="token punctuation">(</span>img<span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>img<span class="token punctuation">.</span>shape<span class="token punctuation">)</span>
+
+<span class="token comment" spellcheck="true">#灰度处理</span>
+img<span class="token operator">=</span>cv2<span class="token punctuation">.</span>imread<span class="token punctuation">(</span><span class="token string">'./att_faces/test.jpg'</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">)</span>
+plt_show<span class="token punctuation">(</span>img<span class="token punctuation">)</span>
+imgs<span class="token operator">=</span><span class="token punctuation">[</span><span class="token punctuation">]</span>
+imgs<span class="token punctuation">.</span>append<span class="token punctuation">(</span>img<span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true">#特征矩阵</span>
+image_data<span class="token operator">=</span><span class="token punctuation">[</span><span class="token punctuation">]</span>
+forimginimgs<span class="token punctuation">:</span>
+data<span class="token operator">=</span>img<span class="token punctuation">.</span>flatten<span class="token punctuation">(</span><span class="token punctuation">)</span>
+image_data<span class="token punctuation">.</span>append<span class="token punctuation">(</span>data<span class="token punctuation">)</span>
+test<span class="token operator">=</span>np<span class="token punctuation">.</span>array<span class="token punctuation">(</span>image_data<span class="token punctuation">)</span>
+test<span class="token punctuation">.</span>shape
+
+<span class="token comment" spellcheck="true"># 用训练好的pca模型给图片降维</span>
+test <span class="token operator">=</span> pca<span class="token punctuation">.</span>transform<span class="token punctuation">(</span>test<span class="token punctuation">)</span>
+test<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>shape
+res <span class="token operator">=</span> model<span class="token punctuation">.</span>predict<span class="token punctuation">(</span>test<span class="token punctuation">)</span>
+res
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'人脸识别结果：'</span><span class="token punctuation">,</span>res<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+</code></pre>
+<h4 id="output-5"><a href="#output-5" class="headerlink" title="output:"></a>output:</h4><blockquote>
+<p>(41, 4308.711798033283)<br>人脸识别结果： 41</p>
+</blockquote>
+<p>参考资料：<br><a target="_blank" rel="noopener" href="https://www.cnblogs.com/zq98/p/12844549.html">https://www.cnblogs.com/zq98/p/12844549.html</a><br><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1Ka4y1i7mS?from=search&seid=6310895614120216298">视频讲解</a></p>
+
+                
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">smile</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="http://smile-knigh.github.io/2021/080561563.html">http://smile-knigh.github.io/2021/080561563.html</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">smile</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/AI/">
+                                    <span class="chip bg-color">AI</span>
+                                </a>
+                            
+                                <a href="/tags/python/">
+                                    <span class="chip bg-color">python</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2021/080961561.html">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/20.jpg" class="responsive-img" alt="H5小游戏从修改到发布--无编程基础修改版">
+                        
+                        <span class="card-title">H5小游戏从修改到发布--无编程基础修改版</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2021-08-09
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/h5/" class="post-category">
+                                    h5
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/h5/">
+                        <span class="chip bg-color">h5</span>
+                    </a>
+                    
+                    <a href="/tags/%E6%B8%B8%E6%88%8F/">
+                        <span class="chip bg-color">游戏</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2021/080561562.html">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="基于opencv的pca人脸识别实现（图像预处理部分）">
+                        
+                        <span class="card-title">基于opencv的pca人脸识别实现（图像预处理部分）</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-08-05
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/python/" class="post-category">
+                                    python
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/AI/">
+                        <span class="chip bg-color">AI</span>
+                    </a>
+                    
+                    <a href="/tags/python/">
+                        <span class="chip bg-color">python</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+        <link rel="stylesheet" href="/libs/aplayer/APlayer.min.css">
+<style>
+    .aplayer .aplayer-lrc p {
+        
+        display: none;
+        
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 16px !important;
+    }
+
+    .aplayer .aplayer-lrc p.aplayer-lrc-current {
+        
+        display: none;
+        
+        font-size: 15px;
+        color: #42b983;
+    }
+
+    
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {
+        left: -66px !important;
+    }
+
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover {
+        left: 0px !important;
+    }
+
+    
+</style>
+<div class="">
+    
+    <div class="row">
+        <meting-js class="col l8 offset-l2 m10 offset-m1 s12"
+                   server="tencent"
+                   type="playlist"
+                   id="2342784507"
+                   fixed='true'
+                   autoplay='false'
+                   theme='#42b983'
+                   loop='all'
+                   order='random'
+                   preload='auto'
+                   volume='0.7'
+                   list-folded='true'
+        >
+        </meting-js>
+    </div>
+</div>
+
+<script src="/libs/aplayer/APlayer.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+
+    
+
+    <div class="container row center-align"
+         style="margin-bottom: 0px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            
+                <span id="year">2021</span>
+            
+            <span id="year">2021</span>
+            <a href="/about" target="_blank">smile</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+            
+            
+                
+            
+            
+                <span id="busuanzi_container_site_pv">
+                &nbsp;|&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;
+                    <span id="busuanzi_value_site_pv" class="white-color"></span>
+            </span>
+            
+            
+            <br>
+
+            <!-- 运行天数提醒. -->
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/smile-knigh/smile-knigh" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="https://blog.csdn.net/freezing_smile" class="tooltipped" target="_blank" data-tooltip="关注我的CSDN: https://blog.csdn.net/freezing_smile" data-position="top" data-delay="50">
+        <i class="fab fa-csdn">C</i>
+    </a>
+
+
+
+    <a href="mailto:503490246@qq.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=503490246" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 503490246" data-position="top" data-delay="50">
+        <i class="fab fa-qq"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fas fa-rss"></i>
+    </a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    var searchFunc = function (path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: "xml",
+            success: function (xmlResponse) {
+                // get the contents from search data
+                var datas = $("entry", xmlResponse).map(function () {
+                    return {
+                        title: $("title", this).text(),
+                        content: $("content", this).text(),
+                        url: $("url", this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function () {
+                    var str = '<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = "";
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function (data) {
+                        var isMatch = true;
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                        var data_url = data.url;
+                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if (data_title !== '' && data_content !== '') {
+                            keywords.forEach(function (keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if (index_title < 0 && index_content < 0) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                            var content = data.content.trim().replace(/<[^>]+>/g, "");
+                            if (first_occur >= 0) {
+                                // cut out 100 characters
+                                var start = first_occur - 20;
+                                var end = first_occur + 80;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 100;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function (keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                                });
+
+                                str += "<p class=\"search-result\">" + match_content + "...</p>"
+                            }
+                            str += "</li>";
+                        }
+                    });
+                    str += "</ul>";
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    };
+
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="/libs/others/clicklove.js" async="async"></script>
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    <!--腾讯兔小巢-->
+    
+    
+
+    
+    
+    <script type="text/javascript" size="150" alpha='0.6'
+        zIndex="-1" src="/libs/background/ribbon-refresh.min.js" async="async"></script>
+    
+
+    
+    <script type="text/javascript" src="/libs/background/ribbon-dynamic.js" async="async"></script>
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
+</html>

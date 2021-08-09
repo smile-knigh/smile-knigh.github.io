@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Hello World, smile">
+    <meta name="keywords" content="基于opencv的pca人脸识别实现（图像预处理部分）, smile">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>Hello World | smile</title>
+    <title>基于opencv的pca人脸识别实现（图像预处理部分） | smile</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -354,12 +354,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/12.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/14.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">Hello World</h1>
+                    <h1 class="description center-align post-title">基于opencv的pca人脸识别实现（图像预处理部分）</h1>
                 </div>
             </div>
         </div>
@@ -473,12 +473,29 @@
             <div class="row tag-cate">
                 <div class="col s7">
                     
-                          <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
-                          </div>
+                    <div class="article-tag">
+                        
+                            <a href="/tags/AI/">
+                                <span class="chip bg-color">AI</span>
+                            </a>
+                        
+                            <a href="/tags/python/">
+                                <span class="chip bg-color">python</span>
+                            </a>
+                        
+                    </div>
                     
                 </div>
                 <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/python/" class="post-category">
+                                python
+                            </a>
+                        
+                    </div>
                     
                 </div>
             </div>
@@ -487,7 +504,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-08-03
+                    2021-08-05
                 </div>
                 
 
@@ -508,36 +525,86 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post.<br>Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info.<br>If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><pre class=" language-bash"><code class="language-bash">$ hexo new <span class="token string">"My New Post"</span>
+                <h2 id="一、灰度变换"><a href="#一、灰度变换" class="headerlink" title="一、灰度变换"></a>一、灰度变换</h2><h3 id="变换原理"><a href="#变换原理" class="headerlink" title="变换原理"></a>变换原理</h3><p>数字图像在计算机上是以位图的形式存在的。位图每一个点称为象素。在数字图像中各个象素所具有的明暗程度称为灰度,灰度值通常用函数f（x,y）表示,x和y是象素点在像平面中的坐标。<br>灰度变换的是对图像上各个象素点的灰度值按某个函数变换到y。灰度变换是图像增强的重要方法之一,它可以使图像动态范围增大,图像对比度扩展,图像变清晰,特征更加明显。常用的灰度变换方法川有线性变换、分段线性变换、非线性灰度变换。  </p>
+<h3 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h3><pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> numpy <span class="token keyword">as</span> np
+<span class="token keyword">from</span> PIL <span class="token keyword">import</span> Image
+<span class="token keyword">import</span> matplotlib<span class="token punctuation">.</span>pyplot <span class="token keyword">as</span> plt
+
+image<span class="token operator">=</span>Image<span class="token punctuation">.</span>open<span class="token punctuation">(</span>r<span class="token string">'.\lay.png'</span><span class="token punctuation">)</span>
+plt<span class="token punctuation">.</span>imshow<span class="token punctuation">(</span>image<span class="token punctuation">)</span>
+<span class="token keyword">import</span> matplotlib<span class="token punctuation">.</span>image <span class="token keyword">as</span> mpimg
+
+pic<span class="token operator">=</span>mpimg<span class="token punctuation">.</span>imread<span class="token punctuation">(</span>r<span class="token string">".\lay.png"</span><span class="token punctuation">)</span>
+
+pic_1<span class="token operator">=</span>pic<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">:</span><span class="token number">638</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">:</span><span class="token number">638</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token comment" spellcheck="true">#[]中的参数就是要处理的坐标</span>
+plt<span class="token punctuation">.</span>imshow<span class="token punctuation">(</span>pic_1<span class="token punctuation">,</span>cmap<span class="token operator">=</span><span class="token string">'Greys_r'</span><span class="token punctuation">)</span><span class="token comment" spellcheck="true">#将此行换成plt.imshow(pic_1)就是热度处理</span>
+plt<span class="token punctuation">.</span>show<span class="token punctuation">(</span><span class="token punctuation">)</span>
 </code></pre>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><pre class=" language-bash"><code class="language-bash">$ hexo server
+<h3 id="output"><a href="#output" class="headerlink" title="output"></a>output</h3><blockquote>
+<p><img src="https://img-blog.csdnimg.cn/efb8822d0e9346f3a112ab1496064f68.png" alt="原图"><br><img src="https://img-blog.csdnimg.cn/36cb83df909e40d3842d89d56ddebe26.png" alt="变换后"></p>
+</blockquote>
+<h2 id="二、阈值分割"><a href="#二、阈值分割" class="headerlink" title="二、阈值分割"></a>二、阈值分割</h2><h3 id="分割原理"><a href="#分割原理" class="headerlink" title="分割原理"></a>分割原理</h3><p>比较目标区域与背景区域, 若目标区域足够大, 且二者有明显的灰度差别, 则该图像的灰度直方图包络线就呈现双峰一谷的曲线。由于 目标边 界点数较少, 其灰度介于二者之间, 因此可将谷底的灰度定为分割闭值。确定谷底的方法是先做直方图, 然后人工找谷底, 并把阈值选择在此处  </p>
+<h3 id="生成直方图"><a href="#生成直方图" class="headerlink" title="生成直方图"></a>生成直方图</h3><pre class=" language-python"><code class="language-python"><span class="token keyword">from</span> scipy <span class="token keyword">import</span> misc
+<span class="token keyword">from</span> PIL <span class="token keyword">import</span> Image
+<span class="token keyword">from</span> pylab <span class="token keyword">import</span> <span class="token operator">*</span>
+<span class="token keyword">from</span> numpy <span class="token keyword">import</span> <span class="token operator">*</span>
+<span class="token keyword">def</span> <span class="token function">histeq</span><span class="token punctuation">(</span>im<span class="token punctuation">,</span>nbr_bins <span class="token operator">=</span> <span class="token number">256</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token triple-quoted-string string">"""对一幅灰度图像进行直方图均衡化"""</span>
+    <span class="token comment" spellcheck="true">#计算图像的直方图</span>
+    <span class="token comment" spellcheck="true">#在numpy中，也提供了一个计算直方图的函数histogram(),第一个返回的是直方图的统计量，第二个为每个bins的中间值</span>
+    imhist<span class="token punctuation">,</span>bins <span class="token operator">=</span> histogram<span class="token punctuation">(</span>im<span class="token punctuation">.</span>flatten<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>nbr_bins<span class="token punctuation">,</span>normed<span class="token operator">=</span> <span class="token boolean">True</span><span class="token punctuation">)</span>
+    cdf <span class="token operator">=</span> imhist<span class="token punctuation">.</span>cumsum<span class="token punctuation">(</span><span class="token punctuation">)</span>   <span class="token comment" spellcheck="true">#</span>
+    cdf <span class="token operator">=</span> <span class="token number">255.0</span> <span class="token operator">*</span> cdf <span class="token operator">/</span> cdf<span class="token punctuation">[</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span>
+    <span class="token comment" spellcheck="true">#使用累积分布函数的线性插值，计算新的像素值</span>
+    im2 <span class="token operator">=</span> interp<span class="token punctuation">(</span>im<span class="token punctuation">.</span>flatten<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>bins<span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span>cdf<span class="token punctuation">)</span>
+    <span class="token keyword">return</span> im2<span class="token punctuation">.</span>reshape<span class="token punctuation">(</span>im<span class="token punctuation">.</span>shape<span class="token punctuation">)</span><span class="token punctuation">,</span>cdf
+
+
+pil_im <span class="token operator">=</span> Image<span class="token punctuation">.</span>open<span class="token punctuation">(</span>r<span class="token string">'lay.png'</span><span class="token punctuation">)</span>   <span class="token comment" spellcheck="true">#打开原图</span>
+pil_im_gray <span class="token operator">=</span> pil_im<span class="token punctuation">.</span>convert<span class="token punctuation">(</span><span class="token string">'L'</span><span class="token punctuation">)</span>     <span class="token comment" spellcheck="true">#转化为灰度图像</span>
+pil_im_gray<span class="token punctuation">.</span>show<span class="token punctuation">(</span><span class="token punctuation">)</span>         <span class="token comment" spellcheck="true">#显示灰度图像</span>
+
+im <span class="token operator">=</span> array<span class="token punctuation">(</span>Image<span class="token punctuation">.</span>open<span class="token punctuation">(</span>r<span class="token string">'lay.png'</span><span class="token punctuation">)</span><span class="token punctuation">.</span>convert<span class="token punctuation">(</span><span class="token string">'L'</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+figure<span class="token punctuation">(</span><span class="token punctuation">)</span>
+hist<span class="token punctuation">(</span>im<span class="token punctuation">.</span>flatten<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token number">600</span><span class="token punctuation">)</span>
+
+im2<span class="token punctuation">,</span>cdf <span class="token operator">=</span> histeq<span class="token punctuation">(</span>im<span class="token punctuation">)</span>
+figure<span class="token punctuation">(</span><span class="token punctuation">)</span>
+hist<span class="token punctuation">(</span>im2<span class="token punctuation">.</span>flatten<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token number">256</span><span class="token punctuation">)</span>
+show<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+im2 <span class="token operator">=</span> Image<span class="token punctuation">.</span>fromarray<span class="token punctuation">(</span>uint8<span class="token punctuation">(</span>im2<span class="token punctuation">)</span><span class="token punctuation">)</span>
+im2<span class="token punctuation">.</span>show<span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>cdf<span class="token punctuation">)</span>
+plot<span class="token punctuation">(</span>cdf<span class="token punctuation">)</span>
 </code></pre>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><pre class=" language-bash"><code class="language-bash">$ hexo generate
+<h3 id="output-1"><a href="#output-1" class="headerlink" title="output"></a>output</h3><blockquote>
+<p><img src="https://img-blog.csdnimg.cn/8c6601fc8c9649e483da698b8de45c29.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2ZyZWV6aW5nX3NtaWxl,size_16,color_FFFFFF,t_70" alt="灰度分布直方图"><br>从结果可以看出图片属于单门限阈值，阈值大致在70左右</p>
+</blockquote>
+<h3 id="阈值分割代码"><a href="#阈值分割代码" class="headerlink" title="阈值分割代码"></a>阈值分割代码</h3><pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> cv2 <span class="token keyword">as</span> cv
+<span class="token keyword">import</span> numpy <span class="token keyword">as</span> np
+
+<span class="token keyword">def</span> <span class="token function">threshold_demo</span><span class="token punctuation">(</span>image<span class="token punctuation">)</span><span class="token punctuation">:</span>                          <span class="token comment" spellcheck="true">#全局阈值</span>
+    gray <span class="token operator">=</span> cv<span class="token punctuation">.</span>cvtColor<span class="token punctuation">(</span>image<span class="token punctuation">,</span> cv<span class="token punctuation">.</span>COLOR_BGR2GRAY<span class="token punctuation">)</span>
+    ret<span class="token punctuation">,</span> binary <span class="token operator">=</span> cv<span class="token punctuation">.</span>threshold<span class="token punctuation">(</span>gray<span class="token punctuation">,</span> <span class="token number">127</span><span class="token punctuation">,</span> <span class="token number">255</span><span class="token punctuation">,</span> cv<span class="token punctuation">.</span>THRESH_BINARY<span class="token operator">|</span>cv<span class="token punctuation">.</span>THRESH_OTSU<span class="token punctuation">)</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"threshold value %s"</span><span class="token operator">%</span>ret<span class="token punctuation">)</span>
+    cv<span class="token punctuation">.</span>imshow<span class="token punctuation">(</span><span class="token string">"global_threshold_binary"</span><span class="token punctuation">,</span> binary<span class="token punctuation">)</span>
+
+src <span class="token operator">=</span> cv<span class="token punctuation">.</span>imread<span class="token punctuation">(</span>r<span class="token string">"greylay.png"</span><span class="token punctuation">)</span>
+cv<span class="token punctuation">.</span>namedWindow<span class="token punctuation">(</span><span class="token string">"input image"</span><span class="token punctuation">,</span> cv<span class="token punctuation">.</span>WINDOW_AUTOSIZE<span class="token punctuation">)</span>
+cv<span class="token punctuation">.</span>imshow<span class="token punctuation">(</span><span class="token string">"input image"</span><span class="token punctuation">,</span> src<span class="token punctuation">)</span>
+threshold_demo<span class="token punctuation">(</span>src<span class="token punctuation">)</span>
+cv<span class="token punctuation">.</span>waitKey<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span>
+cv<span class="token punctuation">.</span>destroyAllWindows<span class="token punctuation">(</span><span class="token punctuation">)</span>
 </code></pre>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><pre class=" language-bash"><code class="language-bash">$ hexo deploy
-</code></pre>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-<p>###example:</p>
-<pre class=" language-markdown"><code class="language-markdown">title: 基于Hexo的hexo-theme-matery主题搭建博客并优化  
-date: 2019-10-03 14:25:00  
-author: 悟尘  
-img: /source/images/xxx.jpg  
-top: true  
-cover: true  
-coverImg: /images/1.jpg  
-password: 8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92  
-toc: false  
-mathjax: false  
-summary: 这是你自定义的文章摘要内容，如果这个属性有值，文章卡片摘要就显示这段文字，否则程序会自动截取文章的部分内容作为摘要  
-categories: 工具  
-tags:
-  <span class="token list punctuation">-</span> blog
-  <span class="token list punctuation">-</span> hexo
-</code></pre>
+<h3 id="output："><a href="#output：" class="headerlink" title="output："></a>output：</h3><blockquote>
+<p><img src="https://img-blog.csdnimg.cn/6d0b0d55ae3746c083e5aaf714472060.png" alt="二值化效果图"></p>
+</blockquote>
+<h2 id="三、图像的膨胀和腐蚀"><a href="#三、图像的膨胀和腐蚀" class="headerlink" title="三、图像的膨胀和腐蚀"></a>三、图像的膨胀和腐蚀</h2><p>膨胀和腐是对二值图像连接成分的变形操作。膨胀是对连接成分的边界扩大一层的处理。腐蚀是将连接成分的边界点去掉从而使连接成份的边界缩小一层的处理。  </p>
+<p>根据得到的直方图采用OTSU阈值分割，实现图像的二值化，可以看到人物的手部，脖子，衣领等等地方都被识别为亮部，要进行人脸识别需要进一步对图像进行膨胀和腐蚀。膨胀是对连接成分的边界扩大的处理，腐蚀是将连接成分的边界点去掉使边界缩小的处理。这里需要膨胀脸部，腐蚀双手等部位。</p>
+<blockquote>
+<p>人脸检测这里使用基于肤色特征的人脸检测，但由于光照和脸部器官的影响，人脸区域可能与其他类肤色区域连在一起，需要进行使用一定规则进行归并，再使用otsu阈值分割，膨胀腐蚀进行检测，如果效果不太好可能会需要多次膨胀与腐蚀</p>
+</blockquote>
 
                 
             </div>
@@ -564,7 +631,7 @@ tags:
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://smile-knigh.github.io/2021/080316107.html">http://smile-knigh.github.io/2021/080316107.html</a>
+                    <a href="http://smile-knigh.github.io/2021/080561562.html">http://smile-knigh.github.io/2021/080561562.html</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -601,7 +668,15 @@ tags:
                 <div class="post-meta__tag-list" style="display: inline-block;">
                     
                         <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
+                            
+                                <a href="/tags/AI/">
+                                    <span class="chip bg-color">AI</span>
+                                </a>
+                            
+                                <a href="/tags/python/">
+                                    <span class="chip bg-color">python</span>
+                                </a>
+                            
                         </div>
                     
                 </div>
@@ -649,13 +724,13 @@ tags:
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2021/080561562.html">
+                <a href="/2021/080561563.html">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="基于opencv的pca人脸识别实现（图像预处理部分）">
+                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="基于opencv的pca人脸识别实现">
                         
-                        <span class="card-title">基于opencv的pca人脸识别实现（图像预处理部分）</span>
+                        <span class="card-title">基于opencv的pca人脸识别实现</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -699,7 +774,7 @@ tags:
         
         <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge right-badge text-color">
-                本篇&nbsp;<i class="far fa-dot-circle"></i>
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
                 <a href="/2021/080316107.html">
@@ -729,7 +804,6 @@ tags:
                         </span>
                     </div>
                 </div>
-
                 
             </div>
         </div>
