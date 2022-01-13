@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="基于opencv的pca人脸识别实现（图像预处理部分）, smile">
+    <meta name="keywords" content="Hello World, smile">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>基于opencv的pca人脸识别实现（图像预处理部分） | smile</title>
+    <title>Hello World | smile</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -354,12 +354,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/14.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/12.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">基于opencv的pca人脸识别实现（图像预处理部分）</h1>
+                    <h1 class="description center-align post-title">Hello World</h1>
                 </div>
             </div>
         </div>
@@ -473,29 +473,12 @@
             <div class="row tag-cate">
                 <div class="col s7">
                     
-                    <div class="article-tag">
-                        
-                            <a href="/tags/AI/">
-                                <span class="chip bg-color">AI</span>
-                            </a>
-                        
-                            <a href="/tags/python/">
-                                <span class="chip bg-color">python</span>
-                            </a>
-                        
-                    </div>
+                          <div class="article-tag">
+                            <span class="chip bg-color">无标签</span>
+                          </div>
                     
                 </div>
                 <div class="col s5 right-align">
-                    
-                    <div class="post-cate">
-                        <i class="fas fa-bookmark fa-fw icon-category"></i>
-                        
-                            <a href="/categories/python/" class="post-category">
-                                python
-                            </a>
-                        
-                    </div>
                     
                 </div>
             </div>
@@ -504,7 +487,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-08-05
+                    2021-11-20
                 </div>
                 
 
@@ -525,89 +508,66 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="一、灰度变换"><a href="#一、灰度变换" class="headerlink" title="一、灰度变换"></a>一、灰度变换</h2><h3 id="变换原理"><a href="#变换原理" class="headerlink" title="变换原理"></a>变换原理</h3><p>数字图像在计算机上是以位图的形式存在的。位图每一个点称为象素。在数字图像中各个象素所具有的明暗程度称为灰度,灰度值通常用函数f（x,y）表示,x和y是象素点在像平面中的坐标。<br>灰度变换的是对图像上各个象素点的灰度值按某个函数变换到y。灰度变换是图像增强的重要方法之一,它可以使图像动态范围增大,图像对比度扩展,图像变清晰,特征更加明显。常用的灰度变换方法川有线性变换、分段线性变换、非线性灰度变换。  </p>
-<h3 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h3><pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> numpy <span class="token keyword">as</span> np
-<span class="token keyword">from</span> PIL <span class="token keyword">import</span> Image
-<span class="token keyword">import</span> matplotlib<span class="token punctuation">.</span>pyplot <span class="token keyword">as</span> plt
+                </font>
 
-image<span class="token operator">=</span>Image<span class="token punctuation">.</span>open<span class="token punctuation">(</span>r<span class="token string">'.\lay.png'</span><span class="token punctuation">)</span>
-plt<span class="token punctuation">.</span>imshow<span class="token punctuation">(</span>image<span class="token punctuation">)</span>
-<span class="token keyword">import</span> matplotlib<span class="token punctuation">.</span>image <span class="token keyword">as</span> mpimg
+<p>@<a href="%E6%96%87%E7%AB%A0%E7%9B%AE%E5%BD%95">TOC</a></p>
+<hr style=" border:solid; width:100px; height:1px;" color=#000000 size=1">
 
-pic<span class="token operator">=</span>mpimg<span class="token punctuation">.</span>imread<span class="token punctuation">(</span>r<span class="token string">".\lay.png"</span><span class="token punctuation">)</span>
+<h1 id="要求"><a href="#要求" class="headerlink" title="要求"></a>要求</h1><p>有一单频信号y(t)=sin(2πft)，其中f=100Hz，和f=500Hz，分别用DFT求y(t)的谱。<br> 抽样频率fs以不发生混叠<br> 记录长度T0取整数周期<br> 用stem语句绘出幅度谱，横坐标为模拟频率f，用plot画出时域波形</p>
+<hr style=" border:solid; width:100px; height:1px;" color=#000000 size=1">
 
-pic_1<span class="token operator">=</span>pic<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">:</span><span class="token number">638</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">:</span><span class="token number">638</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token comment" spellcheck="true">#[]中的参数就是要处理的坐标</span>
-plt<span class="token punctuation">.</span>imshow<span class="token punctuation">(</span>pic_1<span class="token punctuation">,</span>cmap<span class="token operator">=</span><span class="token string">'Greys_r'</span><span class="token punctuation">)</span><span class="token comment" spellcheck="true">#将此行换成plt.imshow(pic_1)就是热度处理</span>
-plt<span class="token punctuation">.</span>show<span class="token punctuation">(</span><span class="token punctuation">)</span>
+<h1 id="一、连续函数抽样"><a href="#一、连续函数抽样" class="headerlink" title="一、连续函数抽样"></a>一、连续函数抽样</h1><pre class=" language-matlab"><code class="language-matlab">f<span class="token operator">=</span><span class="token number">100</span>
+fs<span class="token operator">=</span><span class="token number">1000</span><span class="token punctuation">;</span>                
+dt<span class="token operator">=</span><span class="token number">1</span><span class="token operator">/</span>fs<span class="token punctuation">;</span>               
+T<span class="token operator">=</span><span class="token number">0</span><span class="token operator">:</span>dt<span class="token operator">:</span><span class="token number">0.05</span><span class="token operator">-</span>dt<span class="token punctuation">;</span>            
+xn<span class="token operator">=</span><span class="token function">sin</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token operator">*</span><span class="token keyword">pi</span><span class="token operator">*</span>f<span class="token operator">*</span>T<span class="token punctuation">)</span><span class="token punctuation">;</span>
+f<span class="token operator">=</span><span class="token number">500</span>
+fs<span class="token operator">=</span><span class="token number">8000</span><span class="token punctuation">;</span>                
+dt<span class="token operator">=</span><span class="token number">1</span><span class="token operator">/</span>fs<span class="token punctuation">;</span>               
+T<span class="token operator">=</span><span class="token number">0</span><span class="token operator">:</span>dt<span class="token operator">:</span><span class="token number">0.01</span><span class="token operator">-</span>dt<span class="token punctuation">;</span>            
+xn<span class="token operator">=</span><span class="token function">sin</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token operator">*</span><span class="token keyword">pi</span><span class="token operator">*</span>f<span class="token operator">*</span>T<span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre>
-<p><strong>OUTPUT</strong></p>
-<blockquote>
-<p><img src="https://img-blog.csdnimg.cn/efb8822d0e9346f3a112ab1496064f68.png" alt="原图"><br><img src="https://img-blog.csdnimg.cn/36cb83df909e40d3842d89d56ddebe26.png" alt="变换后"></p>
-</blockquote>
-<h2 id="二、阈值分割"><a href="#二、阈值分割" class="headerlink" title="二、阈值分割"></a>二、阈值分割</h2><h3 id="分割原理"><a href="#分割原理" class="headerlink" title="分割原理"></a>分割原理</h3><p>比较目标区域与背景区域, 若目标区域足够大, 且二者有明显的灰度差别, 则该图像的灰度直方图包络线就呈现双峰一谷的曲线。由于 目标边 界点数较少, 其灰度介于二者之间, 因此可将谷底的灰度定为分割闭值。确定谷底的方法是先做直方图, 然后人工找谷底, 并把阈值选择在此处  </p>
-<h3 id="生成直方图"><a href="#生成直方图" class="headerlink" title="生成直方图"></a>生成直方图</h3><pre class=" language-python"><code class="language-python"><span class="token keyword">from</span> scipy <span class="token keyword">import</span> misc
-<span class="token keyword">from</span> PIL <span class="token keyword">import</span> Image
-<span class="token keyword">from</span> pylab <span class="token keyword">import</span> <span class="token operator">*</span>
-<span class="token keyword">from</span> numpy <span class="token keyword">import</span> <span class="token operator">*</span>
-<span class="token keyword">def</span> <span class="token function">histeq</span><span class="token punctuation">(</span>im<span class="token punctuation">,</span>nbr_bins <span class="token operator">=</span> <span class="token number">256</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
-    <span class="token triple-quoted-string string">"""对一幅灰度图像进行直方图均衡化"""</span>
-    <span class="token comment" spellcheck="true">#计算图像的直方图</span>
-    <span class="token comment" spellcheck="true">#在numpy中，也提供了一个计算直方图的函数histogram(),第一个返回的是直方图的统计量，第二个为每个bins的中间值</span>
-    imhist<span class="token punctuation">,</span>bins <span class="token operator">=</span> histogram<span class="token punctuation">(</span>im<span class="token punctuation">.</span>flatten<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>nbr_bins<span class="token punctuation">,</span>normed<span class="token operator">=</span> <span class="token boolean">True</span><span class="token punctuation">)</span>
-    cdf <span class="token operator">=</span> imhist<span class="token punctuation">.</span>cumsum<span class="token punctuation">(</span><span class="token punctuation">)</span>   <span class="token comment" spellcheck="true">#</span>
-    cdf <span class="token operator">=</span> <span class="token number">255.0</span> <span class="token operator">*</span> cdf <span class="token operator">/</span> cdf<span class="token punctuation">[</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span>
-    <span class="token comment" spellcheck="true">#使用累积分布函数的线性插值，计算新的像素值</span>
-    im2 <span class="token operator">=</span> interp<span class="token punctuation">(</span>im<span class="token punctuation">.</span>flatten<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>bins<span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span>cdf<span class="token punctuation">)</span>
-    <span class="token keyword">return</span> im2<span class="token punctuation">.</span>reshape<span class="token punctuation">(</span>im<span class="token punctuation">.</span>shape<span class="token punctuation">)</span><span class="token punctuation">,</span>cdf
+<h1 id="二、抽样长度确定"><a href="#二、抽样长度确定" class="headerlink" title="二、抽样长度确定"></a>二、抽样长度确定</h1><p>由奈奎斯特抽样定理，fs≥2f，<br>即f=100时，fs≥200，取fs=400；<br>f=500时，fs≥1000，取fs=2000</p>
+<h1 id="三、DFT"><a href="#三、DFT" class="headerlink" title="三、DFT"></a>三、DFT</h1><h2 id="1、使用一次循环实现DFT"><a href="#1、使用一次循环实现DFT" class="headerlink" title="1、使用一次循环实现DFT"></a>1、使用一次循环实现DFT</h2><pre class=" language-matlab"><code class="language-matlab">clear
+f<span class="token operator">=</span><span class="token number">100</span><span class="token punctuation">;</span>                
+t<span class="token operator">=</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token operator">:</span><span class="token number">0.001</span><span class="token operator">:</span><span class="token number">0.1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>      
+x<span class="token operator">=</span><span class="token function">sin</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token operator">*</span><span class="token keyword">pi</span><span class="token operator">*</span>f<span class="token operator">*</span>t<span class="token punctuation">)</span><span class="token punctuation">;</span>  
 
+t1<span class="token operator">=</span>clock<span class="token punctuation">;</span>
+fs<span class="token operator">=</span><span class="token number">1000</span><span class="token punctuation">;</span>                
+dt<span class="token operator">=</span><span class="token number">1</span><span class="token operator">/</span>fs<span class="token punctuation">;</span>               
+T<span class="token operator">=</span><span class="token number">0</span><span class="token operator">:</span>dt<span class="token operator">:</span><span class="token number">0.1</span><span class="token operator">-</span>dt<span class="token punctuation">;</span>            
+xn<span class="token operator">=</span><span class="token function">sin</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token operator">*</span><span class="token keyword">pi</span><span class="token operator">*</span>f<span class="token operator">*</span>T<span class="token punctuation">)</span><span class="token punctuation">;</span>
+N<span class="token operator">=</span><span class="token function">length</span><span class="token punctuation">(</span>xn<span class="token punctuation">)</span><span class="token punctuation">;</span>
+WN<span class="token operator">=</span><span class="token function">exp</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1i</span><span class="token operator">.*</span><span class="token number">2</span><span class="token operator">.*</span><span class="token keyword">pi</span><span class="token operator">./</span>N<span class="token punctuation">)</span><span class="token punctuation">;</span>    
+xk<span class="token operator">=</span><span class="token function">zeros</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span>N<span class="token punctuation">)</span><span class="token punctuation">;</span>
+xk1<span class="token operator">=</span><span class="token function">zeros</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span>N<span class="token punctuation">)</span><span class="token punctuation">;</span>
+k<span class="token operator">=</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token operator">:</span>N<span class="token number">-1</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+ <span class="token keyword">for</span> n<span class="token operator">=</span><span class="token number">0</span><span class="token operator">:</span><span class="token number">1</span><span class="token operator">:</span>N<span class="token number">-1</span>
+   <span class="token function">xk</span><span class="token punctuation">(</span>n<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token operator">=</span>xn<span class="token operator">*</span>WN<span class="token operator">.^</span><span class="token punctuation">(</span>n<span class="token operator">.*</span>k<span class="token operator">'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">%此处下标一定得从1开始，因为matlab的下标是从1开始的</span>
+ <span class="token keyword">end</span>    
+t2<span class="token operator">=</span>clock<span class="token punctuation">;</span>
+<span class="token function">etime</span><span class="token punctuation">(</span>t2<span class="token punctuation">,</span>t1<span class="token punctuation">)</span>
 
-pil_im <span class="token operator">=</span> Image<span class="token punctuation">.</span>open<span class="token punctuation">(</span>r<span class="token string">'lay.png'</span><span class="token punctuation">)</span>   <span class="token comment" spellcheck="true">#打开原图</span>
-pil_im_gray <span class="token operator">=</span> pil_im<span class="token punctuation">.</span>convert<span class="token punctuation">(</span><span class="token string">'L'</span><span class="token punctuation">)</span>     <span class="token comment" spellcheck="true">#转化为灰度图像</span>
-pil_im_gray<span class="token punctuation">.</span>show<span class="token punctuation">(</span><span class="token punctuation">)</span>         <span class="token comment" spellcheck="true">#显示灰度图像</span>
-
-im <span class="token operator">=</span> array<span class="token punctuation">(</span>Image<span class="token punctuation">.</span>open<span class="token punctuation">(</span>r<span class="token string">'lay.png'</span><span class="token punctuation">)</span><span class="token punctuation">.</span>convert<span class="token punctuation">(</span><span class="token string">'L'</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-figure<span class="token punctuation">(</span><span class="token punctuation">)</span>
-hist<span class="token punctuation">(</span>im<span class="token punctuation">.</span>flatten<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token number">600</span><span class="token punctuation">)</span>
-
-im2<span class="token punctuation">,</span>cdf <span class="token operator">=</span> histeq<span class="token punctuation">(</span>im<span class="token punctuation">)</span>
-figure<span class="token punctuation">(</span><span class="token punctuation">)</span>
-hist<span class="token punctuation">(</span>im2<span class="token punctuation">.</span>flatten<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token number">256</span><span class="token punctuation">)</span>
-show<span class="token punctuation">(</span><span class="token punctuation">)</span>
-
-im2 <span class="token operator">=</span> Image<span class="token punctuation">.</span>fromarray<span class="token punctuation">(</span>uint8<span class="token punctuation">(</span>im2<span class="token punctuation">)</span><span class="token punctuation">)</span>
-im2<span class="token punctuation">.</span>show<span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span class="token keyword">print</span><span class="token punctuation">(</span>cdf<span class="token punctuation">)</span>
-plot<span class="token punctuation">(</span>cdf<span class="token punctuation">)</span>
+<span class="token function">subplot</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">)</span>
+<span class="token function">plot</span><span class="token punctuation">(</span>T<span class="token punctuation">,</span>xn<span class="token punctuation">)</span>
+<span class="token function">subplot</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span>
+<span class="token function">stem</span><span class="token punctuation">(</span>k<span class="token punctuation">,</span><span class="token function">abs</span><span class="token punctuation">(</span>xk<span class="token punctuation">)</span><span class="token punctuation">)</span>
 </code></pre>
-<p><strong>OUTPUT</strong></p>
-<blockquote>
-<p><img src="https://img-blog.csdnimg.cn/8c6601fc8c9649e483da698b8de45c29.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2ZyZWV6aW5nX3NtaWxl,size_16,color_FFFFFF,t_70" alt="灰度分布直方图"><br>从结果可以看出图片属于单门限阈值，阈值大致在70左右</p>
-</blockquote>
-<h3 id="阈值分割代码"><a href="#阈值分割代码" class="headerlink" title="阈值分割代码"></a>阈值分割代码</h3><pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> cv2 <span class="token keyword">as</span> cv
-<span class="token keyword">import</span> numpy <span class="token keyword">as</span> np
+<p><strong>运行结果</strong><img src="https://img-blog.csdnimg.cn/610b5d5c1cd24f469478c87b4e988d5d.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBAZnJlZXppbmdfc21pbGU=,size_8,color_FFFFFF,t_70,g_se,x_16" alt="f=500"></p>
+<h2 id="2、使用矩阵实现DFT"><a href="#2、使用矩阵实现DFT" class="headerlink" title="2、使用矩阵实现DFT"></a>2、使用矩阵实现DFT</h2><pre class=" language-matlab"><code class="language-matlab"><span class="token keyword">function</span> xk<span class="token operator">=</span><span class="token function">dt_2</span><span class="token punctuation">(</span>xn<span class="token punctuation">)</span><span class="token punctuation">;</span>
+N<span class="token operator">=</span><span class="token function">length</span><span class="token punctuation">(</span>xn<span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-<span class="token keyword">def</span> <span class="token function">threshold_demo</span><span class="token punctuation">(</span>image<span class="token punctuation">)</span><span class="token punctuation">:</span>                          <span class="token comment" spellcheck="true">#全局阈值</span>
-    gray <span class="token operator">=</span> cv<span class="token punctuation">.</span>cvtColor<span class="token punctuation">(</span>image<span class="token punctuation">,</span> cv<span class="token punctuation">.</span>COLOR_BGR2GRAY<span class="token punctuation">)</span>
-    ret<span class="token punctuation">,</span> binary <span class="token operator">=</span> cv<span class="token punctuation">.</span>threshold<span class="token punctuation">(</span>gray<span class="token punctuation">,</span> <span class="token number">127</span><span class="token punctuation">,</span> <span class="token number">255</span><span class="token punctuation">,</span> cv<span class="token punctuation">.</span>THRESH_BINARY<span class="token operator">|</span>cv<span class="token punctuation">.</span>THRESH_OTSU<span class="token punctuation">)</span>
-    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"threshold value %s"</span><span class="token operator">%</span>ret<span class="token punctuation">)</span>
-    cv<span class="token punctuation">.</span>imshow<span class="token punctuation">(</span><span class="token string">"global_threshold_binary"</span><span class="token punctuation">,</span> binary<span class="token punctuation">)</span>
-
-src <span class="token operator">=</span> cv<span class="token punctuation">.</span>imread<span class="token punctuation">(</span>r<span class="token string">"greylay.png"</span><span class="token punctuation">)</span>
-cv<span class="token punctuation">.</span>namedWindow<span class="token punctuation">(</span><span class="token string">"input image"</span><span class="token punctuation">,</span> cv<span class="token punctuation">.</span>WINDOW_AUTOSIZE<span class="token punctuation">)</span>
-cv<span class="token punctuation">.</span>imshow<span class="token punctuation">(</span><span class="token string">"input image"</span><span class="token punctuation">,</span> src<span class="token punctuation">)</span>
-threshold_demo<span class="token punctuation">(</span>src<span class="token punctuation">)</span>
-cv<span class="token punctuation">.</span>waitKey<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span>
-cv<span class="token punctuation">.</span>destroyAllWindows<span class="token punctuation">(</span><span class="token punctuation">)</span>
+WN<span class="token operator">=</span><span class="token function">exp</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">j</span><span class="token operator">*</span><span class="token number">2</span><span class="token operator">*</span><span class="token keyword">pi</span><span class="token operator">/</span>N<span class="token punctuation">)</span><span class="token punctuation">;</span>   
+n<span class="token operator">=</span><span class="token number">0</span><span class="token operator">:</span><span class="token number">1</span><span class="token operator">:</span>N<span class="token number">-1</span><span class="token punctuation">;</span>     <span class="token comment" spellcheck="true">%定义一个一维矩阵，即行向量,从0到N-1</span>
+k<span class="token operator">=</span><span class="token number">0</span><span class="token operator">:</span><span class="token number">1</span><span class="token operator">:</span>N<span class="token number">-1</span><span class="token punctuation">;</span>
+nk<span class="token operator">=</span>k<span class="token operator">'</span><span class="token operator">*</span>n<span class="token punctuation">;</span>      <span class="token comment" spellcheck="true">%行向量k变换为列向量 乘上 行向量n ，得到一个N x N的矩阵</span>
+WNnk<span class="token operator">=</span>WN<span class="token operator">.^</span><span class="token punctuation">(</span>nk<span class="token punctuation">)</span><span class="token punctuation">;</span>      <span class="token comment" spellcheck="true">%做幂运算后的参数仍为一个 N x N的系数矩阵</span>
+xk<span class="token operator">=</span>xn<span class="token operator">*</span>WNnk<span class="token punctuation">;</span>       <span class="token comment" spellcheck="true">%行向量 乘以  N x N的系数矩阵 即为DFT变换后的矩阵</span>
 </code></pre>
-<p><strong>OUTPUT</strong>：</p>
-<blockquote>
-<p><img src="https://img-blog.csdnimg.cn/6d0b0d55ae3746c083e5aaf714472060.png" alt="二值化效果图"></p>
-</blockquote>
-<h2 id="三、图像的膨胀和腐蚀"><a href="#三、图像的膨胀和腐蚀" class="headerlink" title="三、图像的膨胀和腐蚀"></a>三、图像的膨胀和腐蚀</h2><p>膨胀和腐蚀是对二值图像连接成分的变形操作。膨胀是对连接成分的边界扩大一层的处理。腐蚀是将连接成分的边界点去掉从而使连接成份的边界缩小一层的处理。  </p>
-<p>根据得到的直方图采用OTSU阈值分割，实现图像的二值化，可以看到人物的手部，脖子，衣领等等地方都被识别为亮部，要进行人脸识别需要进一步对图像进行膨胀和腐蚀。膨胀是对连接成分的边界扩大的处理，腐蚀是将连接成分的边界点去掉使边界缩小的处理。这里需要膨胀脸部，腐蚀双手等部位。</p>
-<blockquote>
-<p>人脸检测这里使用基于肤色特征的人脸检测，但由于光照和脸部器官的影响，人脸区域可能与其他类肤色区域连在一起，需要进行使用一定规则进行归并，再使用otsu阈值分割，膨胀腐蚀进行检测，如果效果不太好可能会需要多次膨胀与腐蚀</p>
-</blockquote>
+<hr style=" border:solid; width:100px; height:1px;" color=#000000 size=1">
+
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>1、n的取值范围是[0，N-1]，有0时不应该包括N，否则会得到不一样的结果（如图）。可以看到因为取点不准确造成频谱泄露。<br><img src="https://img-blog.csdnimg.cn/86a515fc94214d8e934e309190e55a78.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBAZnJlZXppbmdfc21pbGU=,size_14,color_FFFFFF,t_70,g_se,x_16" alt="错误示例"><br>2、在连续信号进行傅里叶频域变换后，正弦信号的频域只有一个冲击，为w。<br>对离散信号而言，进行离散傅里叶变换以后，由离散傅里叶变换的共轭对称性可以推出时域实序列在频域为共轭对称序列，幅频函数为偶对称。同时可以将傅里叶频域转换到z域后用z反变换快速求出两个冲击信号和。</p>
 
                 
             </div>
@@ -634,7 +594,7 @@ cv<span class="token punctuation">.</span>destroyAllWindows<span class="token pu
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://smile-knigh.github.io/2021/080561562.html">http://smile-knigh.github.io/2021/080561562.html</a>
+                    <a href="http://smile-knigh.github.io/2021/112016108.html">http://smile-knigh.github.io/2021/112016108.html</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -671,15 +631,7 @@ cv<span class="token punctuation">.</span>destroyAllWindows<span class="token pu
                 <div class="post-meta__tag-list" style="display: inline-block;">
                     
                         <div class="article-tag">
-                            
-                                <a href="/tags/AI/">
-                                    <span class="chip bg-color">AI</span>
-                                </a>
-                            
-                                <a href="/tags/python/">
-                                    <span class="chip bg-color">python</span>
-                                </a>
-                            
+                            <span class="chip bg-color">无标签</span>
                         </div>
                     
                 </div>
@@ -727,13 +679,13 @@ cv<span class="token punctuation">.</span>destroyAllWindows<span class="token pu
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2021/080961561.html">
+                <a href="/2021/123161566.html">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/20.jpg" class="responsive-img" alt="H5小游戏从修改到发布--无编程基础修改版">
+                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="基于MCS-51的4位BCD计算器">
                         
-                        <span class="card-title">H5小游戏从修改到发布--无编程基础修改版</span>
+                        <span class="card-title">基于MCS-51的4位BCD计算器</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -744,14 +696,14 @@ cv<span class="token punctuation">.</span>destroyAllWindows<span class="token pu
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-08-09
+                            <i class="far fa-clock fa-fw icon-date"></i>2021-12-31
                         </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/h5/" class="post-category">
-                                    h5
+                            <a href="/categories/MCS-51/" class="post-category">
+                                    MCS-51
                                 </a>
                             
                             
@@ -761,12 +713,12 @@ cv<span class="token punctuation">.</span>destroyAllWindows<span class="token pu
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/h5/">
-                        <span class="chip bg-color">h5</span>
+                    <a href="/tags/C/">
+                        <span class="chip bg-color">C</span>
                     </a>
                     
-                    <a href="/tags/%E6%B8%B8%E6%88%8F/">
-                        <span class="chip bg-color">游戏</span>
+                    <a href="/tags/MCS-51/">
+                        <span class="chip bg-color">MCS-51</span>
                     </a>
                     
                 </div>
@@ -780,13 +732,13 @@ cv<span class="token punctuation">.</span>destroyAllWindows<span class="token pu
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/080561563.html">
+                <a href="/2021/091861565.html">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="基于opencv的pca人脸识别实现">
+                        <img src="/medias/featureimages/18.jpg" class="responsive-img" alt="Word培训">
                         
-                        <span class="card-title">基于opencv的pca人脸识别实现</span>
+                        <span class="card-title">Word培训</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -797,14 +749,14 @@ cv<span class="token punctuation">.</span>destroyAllWindows<span class="token pu
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-08-05
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-09-18
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/python/" class="post-category">
-                                    python
+                            <a href="/categories/office/" class="post-category">
+                                    office
                                 </a>
                             
                             
@@ -814,12 +766,12 @@ cv<span class="token punctuation">.</span>destroyAllWindows<span class="token pu
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/AI/">
-                        <span class="chip bg-color">AI</span>
+                    <a href="/tags/word/">
+                        <span class="chip bg-color">word</span>
                     </a>
                     
-                    <a href="/tags/python/">
-                        <span class="chip bg-color">python</span>
+                    <a href="/tags/office/">
+                        <span class="chip bg-color">office</span>
                     </a>
                     
                 </div>

@@ -596,7 +596,8 @@ labels<span class="token punctuation">.</span>append<span class="token punctuati
 <span class="token keyword">print</span><span class="token punctuation">(</span>type<span class="token punctuation">(</span>images<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
 <span class="token keyword">print</span><span class="token punctuation">(</span>labels<span class="token punctuation">)</span>
 </code></pre>
-<h4 id="output-1"><a href="#output-1" class="headerlink" title="output:"></a>output:</h4><blockquote>
+<p><strong>output</strong>:</p>
+<blockquote>
 <p>410<br>410<br>&lt;class ‘numpy.ndarray’&gt;<br>[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 26, 26, 26, 26, 26, 26, 26, 26, 26, 26, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 29, 29, 29, 29, 29, 29, 29, 29, 29, 29, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 31, 31, 31, 31, 31, 31, 31, 31, 31, 31, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 36, 36, 36, 36, 36, 36, 36, 36, 36, 36, 37, 37, 37, 37, 37, 37, 37, 37, 37, 37, 38, 38, 38, 38, 38, 38, 38, 38, 38, 38, 39, 39, 39, 39, 39, 39, 39, 39, 39, 39, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 41, 41, 41, 41, 41, 41, 41, 41, 41, 41]  </p>
 </blockquote>
 <h4 id="2、训练阶段-主要是将训练图像投影到特征脸子空间上"><a href="#2、训练阶段-主要是将训练图像投影到特征脸子空间上" class="headerlink" title="2、训练阶段,主要是将训练图像投影到特征脸子空间上"></a>2、训练阶段,主要是将训练图像投影到特征脸子空间上</h4><pre class=" language-python"><code class="language-python"><span class="token comment" spellcheck="true">#图像数据转换特征矩阵</span>
@@ -606,7 +607,8 @@ data<span class="token operator">=</span>image<span class="token punctuation">.<
 image_data<span class="token punctuation">.</span>append<span class="token punctuation">(</span>data<span class="token punctuation">)</span>
 <span class="token keyword">print</span><span class="token punctuation">(</span>image_data<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>shape<span class="token punctuation">)</span>
 </code></pre>
-<h4 id="OUT"><a href="#OUT" class="headerlink" title="OUT:"></a>OUT:</h4><blockquote>
+<p><strong>OUTPUT</strong>:</p>
+<blockquote>
 <p>(10304,)</p>
 </blockquote>
 <pre class=" language-python"><code class="language-python"><span class="token comment" spellcheck="true">#转换为numpy数组</span>
@@ -634,7 +636,8 @@ x_test_pca<span class="token operator">=</span>pca<span class="token punctuation
 <span class="token keyword">print</span><span class="token punctuation">(</span>x_train_pca<span class="token punctuation">.</span>shape<span class="token punctuation">)</span>
 <span class="token keyword">print</span><span class="token punctuation">(</span>x_test_pca<span class="token punctuation">.</span>shape<span class="token punctuation">)</span>
 </code></pre>
-<h4 id="OUT-1"><a href="#OUT-1" class="headerlink" title="OUT:"></a>OUT:</h4><blockquote>
+<p><strong>OUTPUT</strong>:</p>
+<blockquote>
 <p>(328, 100)<br>(82, 100)</p>
 </blockquote>
 <pre class=" language-python"><code class="language-python">V<span class="token operator">=</span>pca<span class="token punctuation">.</span>components_
@@ -652,7 +655,8 @@ pca<span class="token punctuation">.</span>explained_variance_ratio_
 <span class="token keyword">print</span><span class="token punctuation">(</span>pca<span class="token punctuation">.</span>explained_variance_ratio_<span class="token punctuation">)</span>
 pca<span class="token punctuation">.</span>explained_variance_ratio_<span class="token punctuation">.</span>sum<span class="token punctuation">(</span><span class="token punctuation">)</span>
 </code></pre>
-<h4 id="output-2"><a href="#output-2" class="headerlink" title="output:"></a>output:</h4><blockquote>
+<p><strong>OUTPUT</strong>:</p>
+<blockquote>
 <p><img src="https://img-blog.csdnimg.cn/9d4bec5fda4e4228b60efa2e3de3f428.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2ZyZWV6aW5nX3NtaWxl,size_16,color_FFFFFF,t_70">    </p>
 </blockquote>
 <pre class=" language-python"><code class="language-python">explained_variance_ratio<span class="token operator">=</span><span class="token punctuation">[</span><span class="token punctuation">]</span>
@@ -662,7 +666,8 @@ explained_variance_ratio<span class="token punctuation">.</span>append<span clas
 plt<span class="token punctuation">.</span>plot<span class="token punctuation">(</span>range<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">151</span><span class="token punctuation">)</span><span class="token punctuation">,</span>explained_variance_ratio<span class="token punctuation">)</span>
 plt<span class="token punctuation">.</span>show<span class="token punctuation">(</span><span class="token punctuation">)</span>
 </code></pre>
-<h4 id="output-3"><a href="#output-3" class="headerlink" title="output:"></a>output:</h4><blockquote>
+<p><strong>OUTPUT</strong>:</p>
+<blockquote>
 <p>array([0.16754406, 0.11712118, 0.08050592, 0.05800583, 0.04899411, 0.03236304, 0.02552568, 0.02246334, 0.02105942, 0.01869678, 0.01492577, 0.01452819, 0.01195689, 0.01106418, 0.01061136, 0.00920361, 0.00893044, 0.00841665, 0.00815548, 0.00745415, 0.00684847, 0.00674609, 0.00641437, 0.00555017, 0.00533678, 0.00511044, 0.00498169, 0.00493545, 0.00477643, 0.0046901 , 0.00452947, 0.00443995, 0.00424948, 0.00415627, 0.00402244, 0.00391703, 0.00380438, 0.00365518, 0.00347555, 0.00338822, 0.00325 , 0.00306806, 0.00305956, 0.00297671, 0.00286721, 0.00281228, 0.00272433, 0.00266031, 0.00257338, 0.00251557, 0.00247235, 0.00243605, 0.00236254, 0.00232992, 0.00225821, 0.00221418, 0.00217406, 0.00213639, 0.00203163, 0.00199645, 0.00194659, 0.00193678, 0.00187899, 0.00186114, 0.00181597, 0.00178071, 0.0017298 , 0.00171467, 0.00166234, 0.00163148, 0.00160447, 0.00157375, 0.00155019, 0.00154325, 0.00152017, 0.00149426, 0.00147426, 0.00145617, 0.00143343, 0.00140277, 0.00138425, 0.00135825, 0.00134036, 0.00133259, 0.00129024, 0.00126753, 0.00124071, 0.00123078, 0.00121395, 0.00119294, 0.00116697, 0.00115547, 0.00111406, 0.00111104, 0.00109964, 0.00107608, 0.00106702, 0.00105275, 0.00102797, 0.00100745])<br>0.9002145083699277  </p>
 </blockquote>
 <p>array里的这些值代表这些特征量对原图的贡献，最后这里300个特征量的贡献占到总10000多维度的90%</p>
@@ -685,7 +690,8 @@ true<span class="token operator">=</span>true<span class="token operator">+</spa
 
 <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'测试集识别准确率：%.2f'</span><span class="token operator">%</span><span class="token punctuation">(</span>true<span class="token operator">/</span>len<span class="token punctuation">(</span>y_test<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
 </code></pre>
-<h4 id="output-4"><a href="#output-4" class="headerlink" title="output:"></a>output:</h4><blockquote>
+<p><strong>OUTPUT</strong>:</p>
+<blockquote>
 <p>(17, 3574.1839755765554)<br>0<br>测试集识别准确率：0.99</p>
 </blockquote>
 <pre class=" language-python"><code class="language-python"><span class="token comment" spellcheck="true">#降维</span>
@@ -727,7 +733,8 @@ res <span class="token operator">=</span> model<span class="token punctuation">.
 res
 <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'人脸识别结果：'</span><span class="token punctuation">,</span>res<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
 </code></pre>
-<h4 id="output-5"><a href="#output-5" class="headerlink" title="output:"></a>output:</h4><blockquote>
+<p><strong>OUTPUT</strong>:</p>
+<blockquote>
 <p>(41, 4308.711798033283)<br>人脸识别结果： 41</p>
 </blockquote>
 <p>参考资料：<br><a target="_blank" rel="noopener" href="https://www.cnblogs.com/zq98/p/12844549.html">https://www.cnblogs.com/zq98/p/12844549.html</a><br><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1Ka4y1i7mS?from=search&seid=6310895614120216298">视频讲解</a></p>
@@ -850,59 +857,6 @@ res
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2021/080961561.html">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/20.jpg" class="responsive-img" alt="H5小游戏从修改到发布--无编程基础修改版">
-                        
-                        <span class="card-title">H5小游戏从修改到发布--无编程基础修改版</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            
-                        
-                    </div>
-                    <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-08-09
-                        </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/h5/" class="post-category">
-                                    h5
-                                </a>
-                            
-                            
-                        </span>
-                    </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/h5/">
-                        <span class="chip bg-color">h5</span>
-                    </a>
-                    
-                    <a href="/tags/%E6%B8%B8%E6%88%8F/">
-                        <span class="chip bg-color">游戏</span>
-                    </a>
-                    
-                </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
-            </div>
-            <div class="card">
                 <a href="/2021/080561562.html">
                     <div class="card-image">
                         
@@ -919,9 +873,9 @@ res
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-08-05
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2021-08-05
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -945,6 +899,43 @@ res
                         <span class="chip bg-color">python</span>
                     </a>
                     
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2021/080316107.html">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="Hello World">
+                        
+                        <span class="card-title">Hello World</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-08-03
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-user fa-fw"></i>
+                            smile
+                            
+                        </span>
+                    </div>
                 </div>
                 
             </div>
@@ -1138,7 +1129,7 @@ res
         <div class="col s12 m8 l8 copy-right">
             Copyright&nbsp;&copy;
             
-                <span id="year">2021</span>
+                <span id="year">2021-2022</span>
             
             <span id="year">2021</span>
             <a href="/about" target="_blank">smile</a>
