@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="基于opencv的pca人脸识别实现（图像预处理部分）, smile">
+    <meta name="keywords" content="匹配滤波器, smile">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>基于opencv的pca人脸识别实现（图像预处理部分） | smile</title>
+    <title>匹配滤波器 | smile</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -354,12 +354,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/14.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/2.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">基于opencv的pca人脸识别实现（图像预处理部分）</h1>
+                    <h1 class="description center-align post-title">匹配滤波器</h1>
                 </div>
             </div>
         </div>
@@ -475,12 +475,12 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/AI/">
-                                <span class="chip bg-color">AI</span>
+                            <a href="/tags/C/">
+                                <span class="chip bg-color">C</span>
                             </a>
                         
-                            <a href="/tags/python/">
-                                <span class="chip bg-color">python</span>
+                            <a href="/tags/MCS-51/">
+                                <span class="chip bg-color">MCS-51</span>
                             </a>
                         
                     </div>
@@ -491,8 +491,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/python/" class="post-category">
-                                python
+                            <a href="/categories/MCS-51/" class="post-category">
+                                MCS-51
                             </a>
                         
                     </div>
@@ -504,7 +504,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-08-05
+                    2021-12-31
                 </div>
                 
 
@@ -525,89 +525,120 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="一、灰度变换"><a href="#一、灰度变换" class="headerlink" title="一、灰度变换"></a>一、灰度变换</h2><h3 id="变换原理"><a href="#变换原理" class="headerlink" title="变换原理"></a>变换原理</h3><p>数字图像在计算机上是以位图的形式存在的。位图每一个点称为象素。在数字图像中各个象素所具有的明暗程度称为灰度,灰度值通常用函数f（x,y）表示,x和y是象素点在像平面中的坐标。<br>灰度变换的是对图像上各个象素点的灰度值按某个函数变换到y。灰度变换是图像增强的重要方法之一,它可以使图像动态范围增大,图像对比度扩展,图像变清晰,特征更加明显。常用的灰度变换方法川有线性变换、分段线性变换、非线性灰度变换。  </p>
-<h3 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h3><pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> numpy <span class="token keyword">as</span> np
-<span class="token keyword">from</span> PIL <span class="token keyword">import</span> Image
-<span class="token keyword">import</span> matplotlib<span class="token punctuation">.</span>pyplot <span class="token keyword">as</span> plt
+                <h1 id="匹配滤波器验证实验：原理与仿真分析"><a href="#匹配滤波器验证实验：原理与仿真分析" class="headerlink" title="匹配滤波器验证实验：原理与仿真分析"></a>匹配滤波器验证实验：原理与仿真分析</h1><h2 id="1-引言"><a href="#1-引言" class="headerlink" title="1. 引言"></a>1. 引言</h2><p>匹配滤波器是信号检测理论中的核心概念，它能够在噪声背景下最大程度地增强特定信号，从而提高检测性能。本文将基于MATLAB仿真实验，验证匹配滤波器的基本特性，包括输出信噪比优化、时间适应性、与相关处理的等效性以及频域特性。</p>
+<hr>
+<h2 id="2-匹配滤波器原理简介"><a href="#2-匹配滤波器原理简介" class="headerlink" title="2. 匹配滤波器原理简介"></a>2. 匹配滤波器原理简介</h2><h3 id="2-1-基本理论"><a href="#2-1-基本理论" class="headerlink" title="2.1 基本理论"></a>2.1 基本理论</h3><p>匹配滤波器是一种最优滤波器，其设计目标是<strong>最大化输出信噪比（SNR）</strong>。其冲激响应是输入信号的共轭镜像：</p>
+<p>$$<br>h(t) = c \cdot u^*(t_0 - t)<br>$$</p>
+<p>其中 $u(t)$ 是目标信号，$t_0$ 是信号结束时间，$c$ 是常数（实验中取1）。</p>
+<h3 id="2-2-信号形式"><a href="#2-2-信号形式" class="headerlink" title="2.2 信号形式"></a>2.2 信号形式</h3><p>实验中采用<strong>线性调频信号（LFM）</strong>，其表达式为：</p>
+<p>$$<br>\text{signal} = \exp\left(j \pi \frac{B}{T} t^2\right)<br>$$</p>
+<p>参数设置：</p>
+<ul>
+<li>时间范围：$[0, 10 \mu s]$</li>
+<li>带宽：$B = 20 \text{MHz}$</li>
+<li>采样频率：$F_s = 50 \text{MHz}$</li>
+<li>起始频率：$0 \text{Hz}$</li>
+</ul>
+<hr>
+<h2 id="3-实验设计与仿真"><a href="#3-实验设计与仿真" class="headerlink" title="3. 实验设计与仿真"></a>3. 实验设计与仿真</h2><h3 id="3-1-信号生成与匹配滤波器构建"><a href="#3-1-信号生成与匹配滤波器构建" class="headerlink" title="3.1 信号生成与匹配滤波器构建"></a>3.1 信号生成与匹配滤波器构建</h3><p>生成信号的实部与虚部如下图所示：<br><img src="https://i-blog.csdnimg.cn/direct/3f4e5dd4a24d417da4c0178466e14495.png" alt="信号的实部与虚部"><br><img src="https://i-blog.csdnimg.cn/direct/69085e70513c401fbe52ee47ec7d5e8e.png" alt="匹配滤波器的冲激响应"></p>
+<h3 id="3-2-输出信噪比验证"><a href="#3-2-输出信噪比验证" class="headerlink" title="3.2 输出信噪比验证"></a>3.2 输出信噪比验证</h3><p>在信号中加入5dB的高斯白噪声，观察匹配滤波器的输出，实验结果对比：<br><img src="https://i-blog.csdnimg.cn/direct/e1247aa849564dd1836117644fdb5c8e.png" alt="加噪信号与脉冲响应"></p>
+<h2 id="4-特性验证结果"><a href="#4-特性验证结果" class="headerlink" title="4. 特性验证结果"></a>4. 特性验证结果</h2><h3 id="4-1-时间适应性"><a href="#4-1-时间适应性" class="headerlink" title="4.1 时间适应性"></a>4.1 时间适应性</h3><p>即使信号出现时间延迟，只要波形不变，匹配滤波器仍能有效检测，实验结果：<br><img src="https://i-blog.csdnimg.cn/direct/3aedc53eeef749cbb70b1c6edc9760d1.png" alt="两个生成信号与对应的回波信号的时域特性"></p>
+<h3 id="4-2-匹配滤波与相关处理的等效性"><a href="#4-2-匹配滤波与相关处理的等效性" class="headerlink" title="4.2 匹配滤波与相关处理的等效性"></a>4.2 匹配滤波与相关处理的等效性</h3><p>对信号u1分别做相关处理与匹配处理，得到的时域特性对比如下。从波形上来看两者是完全相同的：</p>
+<p><img src="https://i-blog.csdnimg.cn/direct/7b31321ac11541d980018a827f66bc75.png" alt="相关处理与匹配处理"></p>
+<hr>
+<h2 id="5-实验结论"><a href="#5-实验结论" class="headerlink" title="5. 实验结论"></a>5. 实验结论</h2><ol>
+<li><strong>输出信噪比提升</strong>：匹配滤波器能显著提高信噪比（5dB→20dB以上），增强信号检测能力；</li>
+<li><strong>时间适应性</strong>：只要信号波形不变，匹配滤波器对时延信号依然有效，输出峰值延迟与信号延迟一致；</li>
+<li><strong>等效性</strong>：匹配滤波处理与相关处理在时域上完全等效；</li>
+<li><strong>频域特性</strong>：匹配滤波器的幅频特性与信号一致，相频特性与信号互补。</li>
+</ol>
+<hr>
+<h2 id="6-完整MATLAB源代码"><a href="#6-完整MATLAB源代码" class="headerlink" title="6. 完整MATLAB源代码"></a>6. 完整MATLAB源代码</h2><pre class=" language-matlab"><code class="language-matlab"><span class="token comment" spellcheck="true">%% 产生线性调频波</span>
+T <span class="token operator">=</span> <span class="token number">10e-6</span><span class="token punctuation">;</span>      <span class="token comment" spellcheck="true">%持续时间10us</span>
+T0 <span class="token operator">=</span> <span class="token number">10e-6</span><span class="token punctuation">;</span>               <span class="token comment" spellcheck="true">%T0在10us</span>
+snr <span class="token operator">=</span> <span class="token number">5</span><span class="token punctuation">;</span>
+B <span class="token operator">=</span> <span class="token number">20e6</span><span class="token punctuation">;</span>       <span class="token comment" spellcheck="true">%带宽20MHz</span>
+Fs <span class="token operator">=</span> <span class="token number">50e6</span><span class="token punctuation">;</span>       <span class="token comment" spellcheck="true">%采样频率</span>
+K <span class="token operator">=</span> B<span class="token operator">/</span>T<span class="token punctuation">;</span>
 
-image<span class="token operator">=</span>Image<span class="token punctuation">.</span>open<span class="token punctuation">(</span>r<span class="token string">'.\lay.png'</span><span class="token punctuation">)</span>
-plt<span class="token punctuation">.</span>imshow<span class="token punctuation">(</span>image<span class="token punctuation">)</span>
-<span class="token keyword">import</span> matplotlib<span class="token punctuation">.</span>image <span class="token keyword">as</span> mpimg
+f0 <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">%初始频率</span>
+f1 <span class="token operator">=</span> f0 <span class="token operator">+</span> B<span class="token punctuation">;</span><span class="token comment" spellcheck="true">%终止频率</span>
+t<span class="token operator">=</span><span class="token number">0</span><span class="token operator">:</span><span class="token number">1</span><span class="token operator">/</span>Fs<span class="token operator">:</span>T<span class="token punctuation">;</span><span class="token comment" spellcheck="true">%根据结束时间生成时间序列</span>
+u1 <span class="token operator">=</span> <span class="token function">exp</span><span class="token punctuation">(</span><span class="token number">1j</span><span class="token operator">*</span><span class="token number">2</span><span class="token operator">*</span><span class="token keyword">pi</span><span class="token operator">*</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token operator">/</span><span class="token number">2</span><span class="token operator">*</span>K<span class="token operator">*</span>t<span class="token operator">.*</span>t<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">figure</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">subplot</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">plot</span><span class="token punctuation">(</span><span class="token function">real</span><span class="token punctuation">(</span>u1<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">title</span><span class="token punctuation">(</span><span class="token string">'信号实部'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">subplot</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">plot</span><span class="token punctuation">(</span><span class="token function">imag</span><span class="token punctuation">(</span>u1<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">title</span><span class="token punctuation">(</span><span class="token string">'信号虚部'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment" spellcheck="true">%% 产生匹配滤波器</span>
 
-pic<span class="token operator">=</span>mpimg<span class="token punctuation">.</span>imread<span class="token punctuation">(</span>r<span class="token string">".\lay.png"</span><span class="token punctuation">)</span>
+h <span class="token operator">=</span> <span class="token function">conj</span><span class="token punctuation">(</span><span class="token function">u1</span><span class="token punctuation">(</span><span class="token keyword">end</span><span class="token operator">:</span><span class="token operator">-</span><span class="token number">1</span><span class="token operator">:</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+t <span class="token operator">=</span> <span class="token operator">-</span><span class="token function">t</span><span class="token punctuation">(</span><span class="token keyword">end</span><span class="token operator">:</span><span class="token operator">-</span><span class="token number">1</span><span class="token operator">:</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">+</span> T0<span class="token punctuation">;</span>
+<span class="token function">figure</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">subplot</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">plot</span><span class="token punctuation">(</span><span class="token function">real</span><span class="token punctuation">(</span>h<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">title</span><span class="token punctuation">(</span><span class="token string">'信号实部'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">subplot</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">plot</span><span class="token punctuation">(</span><span class="token function">imag</span><span class="token punctuation">(</span>h<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">title</span><span class="token punctuation">(</span><span class="token string">'信号虚部'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-pic_1<span class="token operator">=</span>pic<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">:</span><span class="token number">638</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">:</span><span class="token number">638</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token comment" spellcheck="true">#[]中的参数就是要处理的坐标</span>
-plt<span class="token punctuation">.</span>imshow<span class="token punctuation">(</span>pic_1<span class="token punctuation">,</span>cmap<span class="token operator">=</span><span class="token string">'Greys_r'</span><span class="token punctuation">)</span><span class="token comment" spellcheck="true">#将此行换成plt.imshow(pic_1)就是热度处理</span>
-plt<span class="token punctuation">.</span>show<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+<span class="token comment" spellcheck="true">%% 验证输出信噪比特性</span>
+
+y1 <span class="token operator">=</span> <span class="token function">awgn</span><span class="token punctuation">(</span>u1<span class="token punctuation">,</span> snr<span class="token punctuation">,</span> <span class="token string">'measured'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">figure</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">subplot</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">plot</span><span class="token punctuation">(</span>t<span class="token operator">*</span><span class="token number">1e6</span><span class="token punctuation">,</span>y1<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">title</span><span class="token punctuation">(</span><span class="token string">'带噪声的信号'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+sr_noise_mf<span class="token operator">=</span><span class="token function">conv</span><span class="token punctuation">(</span>h<span class="token punctuation">,</span>y1<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">%有噪声回波信号匹配滤波（使用脉冲响应和输入信号进行卷积）</span>
+<span class="token function">subplot</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">plot</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token operator">:</span><span class="token function">length</span><span class="token punctuation">(</span>sr_noise_mf<span class="token punctuation">)</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token operator">/</span>Fs<span class="token operator">*</span><span class="token number">1e6</span><span class="token punctuation">,</span><span class="token function">abs</span><span class="token punctuation">(</span>sr_noise_mf<span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token function">title</span><span class="token punctuation">(</span><span class="token string">'匹配滤波器的脉冲响应'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">%% 验证时间适应性</span>
+
+TimeEmpty <span class="token operator">=</span> <span class="token number">10e-6</span><span class="token punctuation">;</span>
+u2 <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token function">u1</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token operator">:</span><span class="token keyword">end</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token function">zeros</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token function">fix</span><span class="token punctuation">(</span>TimeEmpty<span class="token operator">*</span>Fs<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+
+t1<span class="token operator">=</span><span class="token number">0</span><span class="token operator">:</span><span class="token number">1</span><span class="token operator">/</span>Fs<span class="token operator">:</span>T<span class="token operator">+</span>TimeEmpty<span class="token punctuation">;</span><span class="token comment" spellcheck="true">%根据结束时间生成时间序列</span>
+
+h <span class="token operator">=</span> <span class="token function">conj</span><span class="token punctuation">(</span><span class="token function">u1</span><span class="token punctuation">(</span><span class="token keyword">end</span><span class="token operator">:</span><span class="token operator">-</span><span class="token number">1</span><span class="token operator">:</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+y2 <span class="token operator">=</span> <span class="token function">awgn</span><span class="token punctuation">(</span>u2<span class="token punctuation">,</span> snr<span class="token punctuation">,</span> <span class="token string">'measured'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+y3 <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token function">y2</span><span class="token punctuation">(</span><span class="token number">502</span><span class="token operator">:</span><span class="token keyword">end</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token function">y2</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token operator">:</span><span class="token number">501</span><span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+y2_mf<span class="token operator">=</span><span class="token function">conv</span><span class="token punctuation">(</span>h1<span class="token punctuation">,</span>y2<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">%有噪声回波信号匹配滤波（使用脉冲响应和输入信号进行卷积）</span>
+y3_mf<span class="token operator">=</span><span class="token function">conv</span><span class="token punctuation">(</span>h1<span class="token punctuation">,</span>y3<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">%有噪声回波信号匹配滤波（使用脉冲响应和输入信号进行卷积）</span>
+
+<span class="token function">figure</span><span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">subplot</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">plot</span><span class="token punctuation">(</span>t1<span class="token punctuation">,</span>y2<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">title</span><span class="token punctuation">(</span><span class="token string">'信号u2'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">subplot</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">plot</span><span class="token punctuation">(</span>t1<span class="token punctuation">,</span>y3<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">title</span><span class="token punctuation">(</span><span class="token string">'信号u3'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">subplot</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">plot</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token operator">:</span><span class="token function">length</span><span class="token punctuation">(</span>y2_mf<span class="token punctuation">)</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token function">abs</span><span class="token punctuation">(</span>y2_mf<span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token function">title</span><span class="token punctuation">(</span><span class="token string">'u2的匹配滤波器的脉冲响应'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">subplot</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">plot</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token operator">:</span><span class="token function">length</span><span class="token punctuation">(</span>y3_mf<span class="token punctuation">)</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token function">abs</span><span class="token punctuation">(</span>y3_mf<span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token function">title</span><span class="token punctuation">(</span><span class="token string">'u3的匹配滤波器的脉冲响应'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+
+<span class="token comment" spellcheck="true">%% 验证相关处理</span>
+
+u1_mf<span class="token operator">=</span><span class="token function">conv</span><span class="token punctuation">(</span>h<span class="token punctuation">,</span>y1<span class="token punctuation">)</span><span class="token punctuation">;</span> 
+<span class="token function">figure</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">subplot</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">plot</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token operator">:</span><span class="token function">length</span><span class="token punctuation">(</span>u1_mf<span class="token punctuation">)</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token operator">/</span>Fs<span class="token operator">*</span><span class="token number">1e6</span><span class="token punctuation">,</span><span class="token function">abs</span><span class="token punctuation">(</span>u1_mf<span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token function">title</span><span class="token punctuation">(</span><span class="token string">'匹配滤波'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">subplot</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+u4 <span class="token operator">=</span> <span class="token function">abs</span><span class="token punctuation">(</span><span class="token function">xcorr</span><span class="token punctuation">(</span>y1<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">%相关处理</span>
+t_co <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token number">0</span><span class="token operator">:</span><span class="token function">length</span><span class="token punctuation">(</span>u4<span class="token punctuation">)</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token operator">/</span>Fs<span class="token punctuation">;</span>
+<span class="token function">plot</span><span class="token punctuation">(</span>t_co<span class="token operator">*</span><span class="token number">1e6</span><span class="token punctuation">,</span>u4<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">title</span><span class="token punctuation">(</span><span class="token string">'相关处理'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre>
-<p><strong>OUTPUT</strong></p>
-<blockquote>
-<p><img src="https://img-blog.csdnimg.cn/efb8822d0e9346f3a112ab1496064f68.png" alt="原图"><br><img src="https://img-blog.csdnimg.cn/36cb83df909e40d3842d89d56ddebe26.png" alt="变换后"></p>
-</blockquote>
-<h2 id="二、阈值分割"><a href="#二、阈值分割" class="headerlink" title="二、阈值分割"></a>二、阈值分割</h2><h3 id="分割原理"><a href="#分割原理" class="headerlink" title="分割原理"></a>分割原理</h3><p>比较目标区域与背景区域, 若目标区域足够大, 且二者有明显的灰度差别, 则该图像的灰度直方图包络线就呈现双峰一谷的曲线。由于 目标边 界点数较少, 其灰度介于二者之间, 因此可将谷底的灰度定为分割闭值。确定谷底的方法是先做直方图, 然后人工找谷底, 并把阈值选择在此处  </p>
-<h3 id="生成直方图"><a href="#生成直方图" class="headerlink" title="生成直方图"></a>生成直方图</h3><pre class=" language-python"><code class="language-python"><span class="token keyword">from</span> scipy <span class="token keyword">import</span> misc
-<span class="token keyword">from</span> PIL <span class="token keyword">import</span> Image
-<span class="token keyword">from</span> pylab <span class="token keyword">import</span> <span class="token operator">*</span>
-<span class="token keyword">from</span> numpy <span class="token keyword">import</span> <span class="token operator">*</span>
-<span class="token keyword">def</span> <span class="token function">histeq</span><span class="token punctuation">(</span>im<span class="token punctuation">,</span>nbr_bins <span class="token operator">=</span> <span class="token number">256</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
-    <span class="token triple-quoted-string string">"""对一幅灰度图像进行直方图均衡化"""</span>
-    <span class="token comment" spellcheck="true">#计算图像的直方图</span>
-    <span class="token comment" spellcheck="true">#在numpy中，也提供了一个计算直方图的函数histogram(),第一个返回的是直方图的统计量，第二个为每个bins的中间值</span>
-    imhist<span class="token punctuation">,</span>bins <span class="token operator">=</span> histogram<span class="token punctuation">(</span>im<span class="token punctuation">.</span>flatten<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>nbr_bins<span class="token punctuation">,</span>normed<span class="token operator">=</span> <span class="token boolean">True</span><span class="token punctuation">)</span>
-    cdf <span class="token operator">=</span> imhist<span class="token punctuation">.</span>cumsum<span class="token punctuation">(</span><span class="token punctuation">)</span>   <span class="token comment" spellcheck="true">#</span>
-    cdf <span class="token operator">=</span> <span class="token number">255.0</span> <span class="token operator">*</span> cdf <span class="token operator">/</span> cdf<span class="token punctuation">[</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span>
-    <span class="token comment" spellcheck="true">#使用累积分布函数的线性插值，计算新的像素值</span>
-    im2 <span class="token operator">=</span> interp<span class="token punctuation">(</span>im<span class="token punctuation">.</span>flatten<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>bins<span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span>cdf<span class="token punctuation">)</span>
-    <span class="token keyword">return</span> im2<span class="token punctuation">.</span>reshape<span class="token punctuation">(</span>im<span class="token punctuation">.</span>shape<span class="token punctuation">)</span><span class="token punctuation">,</span>cdf
-
-
-pil_im <span class="token operator">=</span> Image<span class="token punctuation">.</span>open<span class="token punctuation">(</span>r<span class="token string">'lay.png'</span><span class="token punctuation">)</span>   <span class="token comment" spellcheck="true">#打开原图</span>
-pil_im_gray <span class="token operator">=</span> pil_im<span class="token punctuation">.</span>convert<span class="token punctuation">(</span><span class="token string">'L'</span><span class="token punctuation">)</span>     <span class="token comment" spellcheck="true">#转化为灰度图像</span>
-pil_im_gray<span class="token punctuation">.</span>show<span class="token punctuation">(</span><span class="token punctuation">)</span>         <span class="token comment" spellcheck="true">#显示灰度图像</span>
-
-im <span class="token operator">=</span> array<span class="token punctuation">(</span>Image<span class="token punctuation">.</span>open<span class="token punctuation">(</span>r<span class="token string">'lay.png'</span><span class="token punctuation">)</span><span class="token punctuation">.</span>convert<span class="token punctuation">(</span><span class="token string">'L'</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-figure<span class="token punctuation">(</span><span class="token punctuation">)</span>
-hist<span class="token punctuation">(</span>im<span class="token punctuation">.</span>flatten<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token number">600</span><span class="token punctuation">)</span>
-
-im2<span class="token punctuation">,</span>cdf <span class="token operator">=</span> histeq<span class="token punctuation">(</span>im<span class="token punctuation">)</span>
-figure<span class="token punctuation">(</span><span class="token punctuation">)</span>
-hist<span class="token punctuation">(</span>im2<span class="token punctuation">.</span>flatten<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token number">256</span><span class="token punctuation">)</span>
-show<span class="token punctuation">(</span><span class="token punctuation">)</span>
-
-im2 <span class="token operator">=</span> Image<span class="token punctuation">.</span>fromarray<span class="token punctuation">(</span>uint8<span class="token punctuation">(</span>im2<span class="token punctuation">)</span><span class="token punctuation">)</span>
-im2<span class="token punctuation">.</span>show<span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span class="token keyword">print</span><span class="token punctuation">(</span>cdf<span class="token punctuation">)</span>
-plot<span class="token punctuation">(</span>cdf<span class="token punctuation">)</span>
-</code></pre>
-<p><strong>OUTPUT</strong></p>
-<blockquote>
-<p><img src="https://img-blog.csdnimg.cn/8c6601fc8c9649e483da698b8de45c29.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2ZyZWV6aW5nX3NtaWxl,size_16,color_FFFFFF,t_70" alt="灰度分布直方图"><br>从结果可以看出图片属于单门限阈值，阈值大致在70左右</p>
-</blockquote>
-<h3 id="阈值分割代码"><a href="#阈值分割代码" class="headerlink" title="阈值分割代码"></a>阈值分割代码</h3><pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> cv2 <span class="token keyword">as</span> cv
-<span class="token keyword">import</span> numpy <span class="token keyword">as</span> np
-
-<span class="token keyword">def</span> <span class="token function">threshold_demo</span><span class="token punctuation">(</span>image<span class="token punctuation">)</span><span class="token punctuation">:</span>                          <span class="token comment" spellcheck="true">#全局阈值</span>
-    gray <span class="token operator">=</span> cv<span class="token punctuation">.</span>cvtColor<span class="token punctuation">(</span>image<span class="token punctuation">,</span> cv<span class="token punctuation">.</span>COLOR_BGR2GRAY<span class="token punctuation">)</span>
-    ret<span class="token punctuation">,</span> binary <span class="token operator">=</span> cv<span class="token punctuation">.</span>threshold<span class="token punctuation">(</span>gray<span class="token punctuation">,</span> <span class="token number">127</span><span class="token punctuation">,</span> <span class="token number">255</span><span class="token punctuation">,</span> cv<span class="token punctuation">.</span>THRESH_BINARY<span class="token operator">|</span>cv<span class="token punctuation">.</span>THRESH_OTSU<span class="token punctuation">)</span>
-    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"threshold value %s"</span><span class="token operator">%</span>ret<span class="token punctuation">)</span>
-    cv<span class="token punctuation">.</span>imshow<span class="token punctuation">(</span><span class="token string">"global_threshold_binary"</span><span class="token punctuation">,</span> binary<span class="token punctuation">)</span>
-
-src <span class="token operator">=</span> cv<span class="token punctuation">.</span>imread<span class="token punctuation">(</span>r<span class="token string">"greylay.png"</span><span class="token punctuation">)</span>
-cv<span class="token punctuation">.</span>namedWindow<span class="token punctuation">(</span><span class="token string">"input image"</span><span class="token punctuation">,</span> cv<span class="token punctuation">.</span>WINDOW_AUTOSIZE<span class="token punctuation">)</span>
-cv<span class="token punctuation">.</span>imshow<span class="token punctuation">(</span><span class="token string">"input image"</span><span class="token punctuation">,</span> src<span class="token punctuation">)</span>
-threshold_demo<span class="token punctuation">(</span>src<span class="token punctuation">)</span>
-cv<span class="token punctuation">.</span>waitKey<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span>
-cv<span class="token punctuation">.</span>destroyAllWindows<span class="token punctuation">(</span><span class="token punctuation">)</span>
-</code></pre>
-<p><strong>OUTPUT</strong>：</p>
-<blockquote>
-<p><img src="https://img-blog.csdnimg.cn/6d0b0d55ae3746c083e5aaf714472060.png" alt="二值化效果图"></p>
-</blockquote>
-<h2 id="三、图像的膨胀和腐蚀"><a href="#三、图像的膨胀和腐蚀" class="headerlink" title="三、图像的膨胀和腐蚀"></a>三、图像的膨胀和腐蚀</h2><p>膨胀和腐蚀是对二值图像连接成分的变形操作。膨胀是对连接成分的边界扩大一层的处理。腐蚀是将连接成分的边界点去掉从而使连接成份的边界缩小一层的处理。  </p>
-<p>根据得到的直方图采用OTSU阈值分割，实现图像的二值化，可以看到人物的手部，脖子，衣领等等地方都被识别为亮部，要进行人脸识别需要进一步对图像进行膨胀和腐蚀。膨胀是对连接成分的边界扩大的处理，腐蚀是将连接成分的边界点去掉使边界缩小的处理。这里需要膨胀脸部，腐蚀双手等部位。</p>
-<blockquote>
-<p>人脸检测这里使用基于肤色特征的人脸检测，但由于光照和脸部器官的影响，人脸区域可能与其他类肤色区域连在一起，需要进行使用一定规则进行归并，再使用otsu阈值分割，膨胀腐蚀进行检测，如果效果不太好可能会需要多次膨胀与腐蚀</p>
-</blockquote>
 
                 
             </div>
@@ -634,7 +665,7 @@ cv<span class="token punctuation">.</span>destroyAllWindows<span class="token pu
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://smile-knigh.github.io/2021/080561562.html">http://smile-knigh.github.io/2021/080561562.html</a>
+                    <a href="http://smile-knigh.github.io/2021/123151565.html">http://smile-knigh.github.io/2021/123151565.html</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -672,12 +703,12 @@ cv<span class="token punctuation">.</span>destroyAllWindows<span class="token pu
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/AI/">
-                                    <span class="chip bg-color">AI</span>
+                                <a href="/tags/C/">
+                                    <span class="chip bg-color">C</span>
                                 </a>
                             
-                                <a href="/tags/python/">
-                                    <span class="chip bg-color">python</span>
+                                <a href="/tags/MCS-51/">
+                                    <span class="chip bg-color">MCS-51</span>
                                 </a>
                             
                         </div>
@@ -727,13 +758,13 @@ cv<span class="token punctuation">.</span>destroyAllWindows<span class="token pu
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2021/080961561.html">
+                <a href="/2021/123161566.html">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/20.jpg" class="responsive-img" alt="H5小游戏从修改到发布--无编程基础修改版">
+                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="基于MCS-51的4位BCD计算器">
                         
-                        <span class="card-title">H5小游戏从修改到发布--无编程基础修改版</span>
+                        <span class="card-title">基于MCS-51的4位BCD计算器</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -744,14 +775,14 @@ cv<span class="token punctuation">.</span>destroyAllWindows<span class="token pu
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-08-09
+                            <i class="far fa-clock fa-fw icon-date"></i>2021-12-31
                         </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/h5/" class="post-category">
-                                    h5
+                            <a href="/categories/MCS-51/" class="post-category">
+                                    MCS-51
                                 </a>
                             
                             
@@ -761,12 +792,12 @@ cv<span class="token punctuation">.</span>destroyAllWindows<span class="token pu
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/h5/">
-                        <span class="chip bg-color">h5</span>
+                    <a href="/tags/C/">
+                        <span class="chip bg-color">C</span>
                     </a>
                     
-                    <a href="/tags/%E6%B8%B8%E6%88%8F/">
-                        <span class="chip bg-color">游戏</span>
+                    <a href="/tags/MCS-51/">
+                        <span class="chip bg-color">MCS-51</span>
                     </a>
                     
                 </div>
@@ -780,13 +811,13 @@ cv<span class="token punctuation">.</span>destroyAllWindows<span class="token pu
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/080561563.html">
+                <a href="/2021/103161567.html">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="基于opencv的pca人脸识别实现">
+                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="离散傅里叶变换的MATLAB实现">
                         
-                        <span class="card-title">基于opencv的pca人脸识别实现</span>
+                        <span class="card-title">离散傅里叶变换的MATLAB实现</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -797,14 +828,14 @@ cv<span class="token punctuation">.</span>destroyAllWindows<span class="token pu
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-08-05
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-10-31
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/python/" class="post-category">
-                                    python
+                            <a href="/categories/MATLAB/" class="post-category">
+                                    MATLAB
                                 </a>
                             
                             
@@ -814,12 +845,8 @@ cv<span class="token punctuation">.</span>destroyAllWindows<span class="token pu
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/AI/">
-                        <span class="chip bg-color">AI</span>
-                    </a>
-                    
-                    <a href="/tags/python/">
-                        <span class="chip bg-color">python</span>
+                    <a href="/tags/MATLAB/">
+                        <span class="chip bg-color">MATLAB</span>
                     </a>
                     
                 </div>

@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="基于opencv的pca人脸识别实现（图像预处理部分）, smile">
+    <meta name="keywords" content="基于自动编码器的异常通信信号识别, smile">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>基于opencv的pca人脸识别实现（图像预处理部分） | smile</title>
+    <title>基于自动编码器的异常通信信号识别 | smile</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -354,12 +354,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/14.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/23.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">基于opencv的pca人脸识别实现（图像预处理部分）</h1>
+                    <h1 class="description center-align post-title">基于自动编码器的异常通信信号识别</h1>
                 </div>
             </div>
         </div>
@@ -475,12 +475,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/AI/">
-                                <span class="chip bg-color">AI</span>
-                            </a>
-                        
-                            <a href="/tags/python/">
-                                <span class="chip bg-color">python</span>
+                            <a href="/tags/Matlab/">
+                                <span class="chip bg-color">Matlab</span>
                             </a>
                         
                     </div>
@@ -491,8 +487,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/python/" class="post-category">
-                                python
+                            <a href="/categories/DL/" class="post-category">
+                                DL
                             </a>
                         
                     </div>
@@ -504,7 +500,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-08-05
+                    2023-12-31
                 </div>
                 
 
@@ -525,89 +521,86 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="一、灰度变换"><a href="#一、灰度变换" class="headerlink" title="一、灰度变换"></a>一、灰度变换</h2><h3 id="变换原理"><a href="#变换原理" class="headerlink" title="变换原理"></a>变换原理</h3><p>数字图像在计算机上是以位图的形式存在的。位图每一个点称为象素。在数字图像中各个象素所具有的明暗程度称为灰度,灰度值通常用函数f（x,y）表示,x和y是象素点在像平面中的坐标。<br>灰度变换的是对图像上各个象素点的灰度值按某个函数变换到y。灰度变换是图像增强的重要方法之一,它可以使图像动态范围增大,图像对比度扩展,图像变清晰,特征更加明显。常用的灰度变换方法川有线性变换、分段线性变换、非线性灰度变换。  </p>
-<h3 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h3><pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> numpy <span class="token keyword">as</span> np
-<span class="token keyword">from</span> PIL <span class="token keyword">import</span> Image
-<span class="token keyword">import</span> matplotlib<span class="token punctuation">.</span>pyplot <span class="token keyword">as</span> plt
-
-image<span class="token operator">=</span>Image<span class="token punctuation">.</span>open<span class="token punctuation">(</span>r<span class="token string">'.\lay.png'</span><span class="token punctuation">)</span>
-plt<span class="token punctuation">.</span>imshow<span class="token punctuation">(</span>image<span class="token punctuation">)</span>
-<span class="token keyword">import</span> matplotlib<span class="token punctuation">.</span>image <span class="token keyword">as</span> mpimg
-
-pic<span class="token operator">=</span>mpimg<span class="token punctuation">.</span>imread<span class="token punctuation">(</span>r<span class="token string">".\lay.png"</span><span class="token punctuation">)</span>
-
-pic_1<span class="token operator">=</span>pic<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">:</span><span class="token number">638</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">:</span><span class="token number">638</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token comment" spellcheck="true">#[]中的参数就是要处理的坐标</span>
-plt<span class="token punctuation">.</span>imshow<span class="token punctuation">(</span>pic_1<span class="token punctuation">,</span>cmap<span class="token operator">=</span><span class="token string">'Greys_r'</span><span class="token punctuation">)</span><span class="token comment" spellcheck="true">#将此行换成plt.imshow(pic_1)就是热度处理</span>
-plt<span class="token punctuation">.</span>show<span class="token punctuation">(</span><span class="token punctuation">)</span>
-</code></pre>
-<p><strong>OUTPUT</strong></p>
-<blockquote>
-<p><img src="https://img-blog.csdnimg.cn/efb8822d0e9346f3a112ab1496064f68.png" alt="原图"><br><img src="https://img-blog.csdnimg.cn/36cb83df909e40d3842d89d56ddebe26.png" alt="变换后"></p>
+                <h1 id="基于自动编码器的异常通信信号识别：深度学习在频谱监测中的应用"><a href="#基于自动编码器的异常通信信号识别：深度学习在频谱监测中的应用" class="headerlink" title="基于自动编码器的异常通信信号识别：深度学习在频谱监测中的应用"></a>基于自动编码器的异常通信信号识别：深度学习在频谱监测中的应用</h1><blockquote>
+<p>本文将介绍一种基于自动编码器的异常通信信号识别方法，该方法在低先验条件下仍能有效检测非法占用等异常信号，准确率达94.3%。</p>
 </blockquote>
-<h2 id="二、阈值分割"><a href="#二、阈值分割" class="headerlink" title="二、阈值分割"></a>二、阈值分割</h2><h3 id="分割原理"><a href="#分割原理" class="headerlink" title="分割原理"></a>分割原理</h3><p>比较目标区域与背景区域, 若目标区域足够大, 且二者有明显的灰度差别, 则该图像的灰度直方图包络线就呈现双峰一谷的曲线。由于 目标边 界点数较少, 其灰度介于二者之间, 因此可将谷底的灰度定为分割闭值。确定谷底的方法是先做直方图, 然后人工找谷底, 并把阈值选择在此处  </p>
-<h3 id="生成直方图"><a href="#生成直方图" class="headerlink" title="生成直方图"></a>生成直方图</h3><pre class=" language-python"><code class="language-python"><span class="token keyword">from</span> scipy <span class="token keyword">import</span> misc
-<span class="token keyword">from</span> PIL <span class="token keyword">import</span> Image
-<span class="token keyword">from</span> pylab <span class="token keyword">import</span> <span class="token operator">*</span>
-<span class="token keyword">from</span> numpy <span class="token keyword">import</span> <span class="token operator">*</span>
-<span class="token keyword">def</span> <span class="token function">histeq</span><span class="token punctuation">(</span>im<span class="token punctuation">,</span>nbr_bins <span class="token operator">=</span> <span class="token number">256</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
-    <span class="token triple-quoted-string string">"""对一幅灰度图像进行直方图均衡化"""</span>
-    <span class="token comment" spellcheck="true">#计算图像的直方图</span>
-    <span class="token comment" spellcheck="true">#在numpy中，也提供了一个计算直方图的函数histogram(),第一个返回的是直方图的统计量，第二个为每个bins的中间值</span>
-    imhist<span class="token punctuation">,</span>bins <span class="token operator">=</span> histogram<span class="token punctuation">(</span>im<span class="token punctuation">.</span>flatten<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>nbr_bins<span class="token punctuation">,</span>normed<span class="token operator">=</span> <span class="token boolean">True</span><span class="token punctuation">)</span>
-    cdf <span class="token operator">=</span> imhist<span class="token punctuation">.</span>cumsum<span class="token punctuation">(</span><span class="token punctuation">)</span>   <span class="token comment" spellcheck="true">#</span>
-    cdf <span class="token operator">=</span> <span class="token number">255.0</span> <span class="token operator">*</span> cdf <span class="token operator">/</span> cdf<span class="token punctuation">[</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span>
-    <span class="token comment" spellcheck="true">#使用累积分布函数的线性插值，计算新的像素值</span>
-    im2 <span class="token operator">=</span> interp<span class="token punctuation">(</span>im<span class="token punctuation">.</span>flatten<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>bins<span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span>cdf<span class="token punctuation">)</span>
-    <span class="token keyword">return</span> im2<span class="token punctuation">.</span>reshape<span class="token punctuation">(</span>im<span class="token punctuation">.</span>shape<span class="token punctuation">)</span><span class="token punctuation">,</span>cdf
-
-
-pil_im <span class="token operator">=</span> Image<span class="token punctuation">.</span>open<span class="token punctuation">(</span>r<span class="token string">'lay.png'</span><span class="token punctuation">)</span>   <span class="token comment" spellcheck="true">#打开原图</span>
-pil_im_gray <span class="token operator">=</span> pil_im<span class="token punctuation">.</span>convert<span class="token punctuation">(</span><span class="token string">'L'</span><span class="token punctuation">)</span>     <span class="token comment" spellcheck="true">#转化为灰度图像</span>
-pil_im_gray<span class="token punctuation">.</span>show<span class="token punctuation">(</span><span class="token punctuation">)</span>         <span class="token comment" spellcheck="true">#显示灰度图像</span>
-
-im <span class="token operator">=</span> array<span class="token punctuation">(</span>Image<span class="token punctuation">.</span>open<span class="token punctuation">(</span>r<span class="token string">'lay.png'</span><span class="token punctuation">)</span><span class="token punctuation">.</span>convert<span class="token punctuation">(</span><span class="token string">'L'</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-figure<span class="token punctuation">(</span><span class="token punctuation">)</span>
-hist<span class="token punctuation">(</span>im<span class="token punctuation">.</span>flatten<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token number">600</span><span class="token punctuation">)</span>
-
-im2<span class="token punctuation">,</span>cdf <span class="token operator">=</span> histeq<span class="token punctuation">(</span>im<span class="token punctuation">)</span>
-figure<span class="token punctuation">(</span><span class="token punctuation">)</span>
-hist<span class="token punctuation">(</span>im2<span class="token punctuation">.</span>flatten<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token number">256</span><span class="token punctuation">)</span>
-show<span class="token punctuation">(</span><span class="token punctuation">)</span>
-
-im2 <span class="token operator">=</span> Image<span class="token punctuation">.</span>fromarray<span class="token punctuation">(</span>uint8<span class="token punctuation">(</span>im2<span class="token punctuation">)</span><span class="token punctuation">)</span>
-im2<span class="token punctuation">.</span>show<span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span class="token keyword">print</span><span class="token punctuation">(</span>cdf<span class="token punctuation">)</span>
-plot<span class="token punctuation">(</span>cdf<span class="token punctuation">)</span>
-</code></pre>
-<p><strong>OUTPUT</strong></p>
-<blockquote>
-<p><img src="https://img-blog.csdnimg.cn/8c6601fc8c9649e483da698b8de45c29.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2ZyZWV6aW5nX3NtaWxl,size_16,color_FFFFFF,t_70" alt="灰度分布直方图"><br>从结果可以看出图片属于单门限阈值，阈值大致在70左右</p>
-</blockquote>
-<h3 id="阈值分割代码"><a href="#阈值分割代码" class="headerlink" title="阈值分割代码"></a>阈值分割代码</h3><pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> cv2 <span class="token keyword">as</span> cv
-<span class="token keyword">import</span> numpy <span class="token keyword">as</span> np
-
-<span class="token keyword">def</span> <span class="token function">threshold_demo</span><span class="token punctuation">(</span>image<span class="token punctuation">)</span><span class="token punctuation">:</span>                          <span class="token comment" spellcheck="true">#全局阈值</span>
-    gray <span class="token operator">=</span> cv<span class="token punctuation">.</span>cvtColor<span class="token punctuation">(</span>image<span class="token punctuation">,</span> cv<span class="token punctuation">.</span>COLOR_BGR2GRAY<span class="token punctuation">)</span>
-    ret<span class="token punctuation">,</span> binary <span class="token operator">=</span> cv<span class="token punctuation">.</span>threshold<span class="token punctuation">(</span>gray<span class="token punctuation">,</span> <span class="token number">127</span><span class="token punctuation">,</span> <span class="token number">255</span><span class="token punctuation">,</span> cv<span class="token punctuation">.</span>THRESH_BINARY<span class="token operator">|</span>cv<span class="token punctuation">.</span>THRESH_OTSU<span class="token punctuation">)</span>
-    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"threshold value %s"</span><span class="token operator">%</span>ret<span class="token punctuation">)</span>
-    cv<span class="token punctuation">.</span>imshow<span class="token punctuation">(</span><span class="token string">"global_threshold_binary"</span><span class="token punctuation">,</span> binary<span class="token punctuation">)</span>
-
-src <span class="token operator">=</span> cv<span class="token punctuation">.</span>imread<span class="token punctuation">(</span>r<span class="token string">"greylay.png"</span><span class="token punctuation">)</span>
-cv<span class="token punctuation">.</span>namedWindow<span class="token punctuation">(</span><span class="token string">"input image"</span><span class="token punctuation">,</span> cv<span class="token punctuation">.</span>WINDOW_AUTOSIZE<span class="token punctuation">)</span>
-cv<span class="token punctuation">.</span>imshow<span class="token punctuation">(</span><span class="token string">"input image"</span><span class="token punctuation">,</span> src<span class="token punctuation">)</span>
-threshold_demo<span class="token punctuation">(</span>src<span class="token punctuation">)</span>
-cv<span class="token punctuation">.</span>waitKey<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span>
-cv<span class="token punctuation">.</span>destroyAllWindows<span class="token punctuation">(</span><span class="token punctuation">)</span>
-</code></pre>
-<p><strong>OUTPUT</strong>：</p>
-<blockquote>
-<p><img src="https://img-blog.csdnimg.cn/6d0b0d55ae3746c083e5aaf714472060.png" alt="二值化效果图"></p>
-</blockquote>
-<h2 id="三、图像的膨胀和腐蚀"><a href="#三、图像的膨胀和腐蚀" class="headerlink" title="三、图像的膨胀和腐蚀"></a>三、图像的膨胀和腐蚀</h2><p>膨胀和腐蚀是对二值图像连接成分的变形操作。膨胀是对连接成分的边界扩大一层的处理。腐蚀是将连接成分的边界点去掉从而使连接成份的边界缩小一层的处理。  </p>
-<p>根据得到的直方图采用OTSU阈值分割，实现图像的二值化，可以看到人物的手部，脖子，衣领等等地方都被识别为亮部，要进行人脸识别需要进一步对图像进行膨胀和腐蚀。膨胀是对连接成分的边界扩大的处理，腐蚀是将连接成分的边界点去掉使边界缩小的处理。这里需要膨胀脸部，腐蚀双手等部位。</p>
-<blockquote>
-<p>人脸检测这里使用基于肤色特征的人脸检测，但由于光照和脸部器官的影响，人脸区域可能与其他类肤色区域连在一起，需要进行使用一定规则进行归并，再使用otsu阈值分割，膨胀腐蚀进行检测，如果效果不太好可能会需要多次膨胀与腐蚀</p>
-</blockquote>
+<hr>
+<h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p><strong>动态频谱访问（DSA）</strong> 被广泛认为是提高频谱利用效率的有效技术，而<strong>频谱感知</strong>是DSA的前提。异常电磁信号（如恶意干扰、非法占用、用户冲突等）的检测是频谱感知的关键组成部分。尤其是在卫星通信频段日益拥挤的背景下，异常信号的识别显得尤为重要。</p>
+<p>传统的异常检测方法（如数据库对比法和历史模型分析法）依赖先验知识且难以应对新型异常信号。而<strong>深度学习</strong>，尤其是<strong>自动编码器</strong>，凭借其强大的特征学习与重构能力，为无监督或半监督的异常信号检测提供了新的解决方案。</p>
+<hr>
+<h2 id="基于自动编码器的异常检测框架"><a href="#基于自动编码器的异常检测框架" class="headerlink" title="基于自动编码器的异常检测框架"></a>基于自动编码器的异常检测框架</h2><h3 id="系统建模"><a href="#系统建模" class="headerlink" title="系统建模"></a>系统建模</h3><p><img src="https://i-blog.csdnimg.cn/direct/cc1bf43fcdf943329a4419ec4f5adb18.png" alt="基于自动编码器重构的异常检测方法模型设计"></p>
+<p>采用<strong>堆叠自动编码器（Stacked Autoencoder）</strong> 作为核心模型，其结构包括编码器（Encoder）和解码器（Decoder）两部分：</p>
+<ul>
+<li><p><strong>编码器</strong>：将输入数据映射到低维特征空间。</p>
+</li>
+<li><p><strong>解码器</strong>：从特征空间重构原始数据。</p>
+<p><img src="https://i-blog.csdnimg.cn/direct/1d6d82ea93244e59a2771ae6c11257d8.png" alt="堆叠自编码器的编码与解码过程"></p>
+</li>
+</ul>
+<p><strong>训练阶段</strong>：仅使用正常信号样本训练自编码器，模型学会对正常信号的有效编码与重构。<br><strong>测试阶段</strong>：异常信号因偏离正常分布，其重构误差将显著高于正常信号。</p>
+<h3 id="数据集与预处理"><a href="#数据集与预处理" class="headerlink" title="数据集与预处理"></a>数据集与预处理</h3><h4 id="数据生成："><a href="#数据生成：" class="headerlink" title="数据生成："></a>数据生成：</h4><ul>
+<li><strong>正常信号</strong>：2个FSK信号，载频分别为10kHz/20kHz和30kHz/40kHz。</li>
+<li><strong>异常信号</strong>：额外加入第3个信号，包括：<ul>
+<li>非法窄带干扰（FSK，载频15kHz/25kHz）</li>
+<li>周期脉冲信号</li>
+<li>啁啾信号</li>
+</ul>
+</li>
+</ul>
+<h4 id="预处理步骤："><a href="#预处理步骤：" class="headerlink" title="预处理步骤："></a>预处理步骤：</h4><ol>
+<li><strong>功率谱密度估计</strong>：使用平均周期图法（汉明窗，8段重叠）。</li>
+<li><strong>数据归一化</strong>：将数据缩放至[0,1]区间。</li>
+</ol>
+<p>$$X^* = \frac{X - \text{min}}{\text{max} - \text{min}}$$</p>
+<h3 id="3-3-降维与重构"><a href="#3-3-降维与重构" class="headerlink" title="3.3 降维与重构"></a>3.3 降维与重构</h3><p>自编码器的目标是最小化重构误差：</p>
+<p>$$\min_{\theta} |X - X’|^2_2$$</p>
+<p>其中 $X$ 为原始输入，$X’$ 为解码器输出。</p>
+<h3 id="3-4-门限判决"><a href="#3-4-门限判决" class="headerlink" title="3.4 门限判决"></a>3.4 门限判决</h3><p>定义<strong>异常分数（Anomaly Score）</strong> 为均方重构误差：</p>
+<p>$$\text{score} = \frac{1}{n} \sum_{i=1}^n (x_i - x’_i)^2$$</p>
+<p>设置阈值 $T$，判决规则为：</p>
+<p>$$<br>\text{state} =<br>\begin{cases}<br>0 &amp; \text{if score} &lt; T \<br>1 &amp; \text{if score} \geq T<br>\end{cases}<br>$$</p>
+<hr>
+<h2 id="4-实验结果与分析"><a href="#4-实验结果与分析" class="headerlink" title="4. 实验结果与分析"></a>4. 实验结果与分析</h2><h3 id="4-1-实验设置"><a href="#4-1-实验设置" class="headerlink" title="4.1 实验设置"></a>4.1 实验设置</h3><table>
+<thead>
+<tr>
+<th>参数</th>
+<th>值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>输入节点数</td>
+<td>1000</td>
+</tr>
+<tr>
+<td>隐藏层1</td>
+<td>50节点</td>
+</tr>
+<tr>
+<td>隐藏层2</td>
+<td>5节点</td>
+</tr>
+<tr>
+<td>输出节点数</td>
+<td>1000</td>
+</tr>
+<tr>
+<td>优化器</td>
+<td>Scaled Conjugate Gradient</td>
+</tr>
+<tr>
+<td>激活函数</td>
+<td>Logsig（隐层），Purelin（输出层）</td>
+</tr>
+</tbody></table>
+<h3 id="4-2-频谱可视化"><a href="#4-2-频谱可视化" class="headerlink" title="4.2 频谱可视化"></a>4.2 频谱可视化</h3><p><img src="https://i-blog.csdnimg.cn/direct/724b0f46021d4437ae0d43c5a57a7310.png" alt="正常信号的功率谱密度估计"></p>
+<h3 id="4-3-性能评估"><a href="#4-3-性能评估" class="headerlink" title="4.3 性能评估"></a>4.3 性能评估</h3><p>模型在测试集（200正常 + 100异常）上的表现：</p>
+<ul>
+<li><strong>准确率</strong>：94.3%</li>
+<li><strong>召回率</strong>：98%</li>
+<li><strong>每样本识别时间</strong>：0.0013秒<br><img src="https://i-blog.csdnimg.cn/direct/61829bb7753644b2831a3217c81122f8.png" alt="测试集中各个样本的重构误差"></li>
+</ul>
+<hr>
+<h2 id="5-结论与未来展望"><a href="#5-结论与未来展望" class="headerlink" title="5. 结论与未来展望"></a>5. 结论与未来展望</h2><p><strong>基于自动编码器的异常检测方法</strong>在低先验条件下实现了高精度、低延迟的异常信号识别，不需要异常样本的学习，并保持了序列级异常的检测能力，尤其适用于非法频带占用等场景。</p>
 
                 
             </div>
@@ -634,7 +627,7 @@ cv<span class="token punctuation">.</span>destroyAllWindows<span class="token pu
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://smile-knigh.github.io/2021/080561562.html">http://smile-knigh.github.io/2021/080561562.html</a>
+                    <a href="http://smile-knigh.github.io/2023/123151566.html">http://smile-knigh.github.io/2023/123151566.html</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -672,12 +665,8 @@ cv<span class="token punctuation">.</span>destroyAllWindows<span class="token pu
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/AI/">
-                                    <span class="chip bg-color">AI</span>
-                                </a>
-                            
-                                <a href="/tags/python/">
-                                    <span class="chip bg-color">python</span>
+                                <a href="/tags/Matlab/">
+                                    <span class="chip bg-color">Matlab</span>
                                 </a>
                             
                         </div>
@@ -727,13 +716,13 @@ cv<span class="token punctuation">.</span>destroyAllWindows<span class="token pu
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2021/080961561.html">
+                <a href="/2024/033151568.html">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/20.jpg" class="responsive-img" alt="H5小游戏从修改到发布--无编程基础修改版">
+                        <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="衰落信道中的数字信号传输">
                         
-                        <span class="card-title">H5小游戏从修改到发布--无编程基础修改版</span>
+                        <span class="card-title">衰落信道中的数字信号传输</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -744,14 +733,14 @@ cv<span class="token punctuation">.</span>destroyAllWindows<span class="token pu
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-08-09
+                            <i class="far fa-clock fa-fw icon-date"></i>2024-03-31
                         </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/h5/" class="post-category">
-                                    h5
+                            <a href="/categories/Matlab/" class="post-category">
+                                    Matlab
                                 </a>
                             
                             
@@ -761,12 +750,8 @@ cv<span class="token punctuation">.</span>destroyAllWindows<span class="token pu
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/h5/">
-                        <span class="chip bg-color">h5</span>
-                    </a>
-                    
-                    <a href="/tags/%E6%B8%B8%E6%88%8F/">
-                        <span class="chip bg-color">游戏</span>
+                    <a href="/tags/Matlab/">
+                        <span class="chip bg-color">Matlab</span>
                     </a>
                     
                 </div>
@@ -780,13 +765,13 @@ cv<span class="token punctuation">.</span>destroyAllWindows<span class="token pu
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/080561563.html">
+                <a href="/2022/030141566.html">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="基于opencv的pca人脸识别实现">
+                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="AES加密协处理器">
                         
-                        <span class="card-title">基于opencv的pca人脸识别实现</span>
+                        <span class="card-title">AES加密协处理器</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -797,14 +782,14 @@ cv<span class="token punctuation">.</span>destroyAllWindows<span class="token pu
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-08-05
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-03-01
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/python/" class="post-category">
-                                    python
+                            <a href="/categories/MCS-51/" class="post-category">
+                                    MCS-51
                                 </a>
                             
                             
@@ -814,12 +799,12 @@ cv<span class="token punctuation">.</span>destroyAllWindows<span class="token pu
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/AI/">
-                        <span class="chip bg-color">AI</span>
+                    <a href="/tags/C/">
+                        <span class="chip bg-color">C</span>
                     </a>
                     
-                    <a href="/tags/python/">
-                        <span class="chip bg-color">python</span>
+                    <a href="/tags/MCS-51/">
+                        <span class="chip bg-color">MCS-51</span>
                     </a>
                     
                 </div>
